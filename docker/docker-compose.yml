@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+    mysql_healthy:
+        image: mysql:8.0
+        container_name: demodb
+        ports:
+            - "3307:3306"
+        environment:
+            MYSQL_ROOT_PASSWORD: n01s4ud3mv4ng
+    
