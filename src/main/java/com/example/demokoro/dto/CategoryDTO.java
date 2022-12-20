@@ -1,5 +1,6 @@
 package com.example.demokoro.dto;
 
+import com.example.demokoro.models.CategoryProduct;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,4 +13,6 @@ public class CategoryDTO {
     private String name;
     private Byte status;
     private Integer stt;
+
+
 }

@@ -1,10 +1,12 @@
 package com.example.demokoro.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "product")
@@ -13,6 +15,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -43,4 +46,19 @@ public class Product {
     @Column(name = "updated_at")
     private java.sql.Timestamp updatedAt;
 
+    //quan hệ với category
+    @JsonManagedReference
+    @OneToMany(mappedBy="product", orphanRemoval=true, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("product")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<CategoryProduct> categoryProduct =new ArrayList<CategoryProduct>();
+
+    //quan hệ với product detail
+    @JsonManagedReference
+    @OneToMany(mappedBy="productDetail", orphanRemoval=true, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("product")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<ProductDetail> productDetail =new ArrayList<ProductDetail>();
 }

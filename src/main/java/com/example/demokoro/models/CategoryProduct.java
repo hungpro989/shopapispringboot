@@ -1,8 +1,8 @@
 package com.example.demokoro.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,13 +13,24 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class CategoryProduct {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "category_id")
-    private Integer categoryId;
-
-    @Column(name = "product_id")
-    private Integer productId;
-
+    //qhe voi category
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="category_id")
+    @JsonIgnoreProperties("product_category")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Category category;
+    //qhe voi product
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="product_id")
+    @JsonIgnoreProperties("product_category")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private Product product;
 }

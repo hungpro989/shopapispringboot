@@ -1,10 +1,12 @@
 package com.example.demokoro.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "category")
@@ -25,4 +27,11 @@ public class Category {
 
     @Column(name = "stt")
     private Integer stt;
+
+    @JsonManagedReference
+    @OneToMany(mappedBy="category", orphanRemoval=true, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties("category")
+    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
+    private List<CategoryProduct> categoryProduct =new ArrayList<CategoryProduct>();
 }

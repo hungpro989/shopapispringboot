@@ -1,5 +1,7 @@
 package com.example.demokoro.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,9 +17,6 @@ public class ProductDetail {
     @Id
     @Column(name = "id")
     private Integer id;
-
-    @Column(name = "product_id")
-    private Integer productId;
 
     @Column(name = "code_name")
     private String codeName;
@@ -55,4 +54,10 @@ public class ProductDetail {
     @Column(name = "updated_at")
     private java.sql.Timestamp updatedAt;
 
+    //quan he vs product
+    @JsonBackReference
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="product_id")
+    @JsonIgnoreProperties("Product_Detail")
+    private ProductDetail productDetail;
 }
