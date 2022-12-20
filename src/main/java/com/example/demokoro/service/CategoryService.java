@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CategoryService implements ICategoryService {
@@ -36,4 +35,49 @@ public class CategoryService implements ICategoryService {
             return null;
 
     }
+
+    @Override
+    public boolean deleteById(Integer id) {
+        if (checkExistId(id)){
+            try {
+                categoryRepository.deleteById(id);
+                return true;
+            }
+            catch(Exception e) {
+                return false;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean save(Category category) {
+        try {
+            categoryRepository.save(category);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean checkExistName(String name) {
+        Category c = categoryRepository.findCategoryByName(name);
+        if (c == null) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean checkExistId(Integer id) {
+        Category c = categoryRepository.findById(id).orElse(null);
+        if (c == null) {
+            return false;
+        }
+        return true;
+    }
+
+
 }
