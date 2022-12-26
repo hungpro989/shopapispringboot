@@ -1,5 +1,6 @@
 package com.example.demokoro.models;
 
+import com.example.demokoro.dto.ProductCreateDTO;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
@@ -47,18 +48,21 @@ public class Product {
     private java.sql.Timestamp updatedAt;
 
     //quan hệ với category
-    @JsonManagedReference
-    @OneToMany(mappedBy="product", orphanRemoval=true, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("product")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<CategoryProduct> categoryProduct =new ArrayList<CategoryProduct>();
+    @OneToMany(mappedBy="product")
+    private List<CategoryProduct> categoryProduct;
 
     //quan hệ với product detail
-    @JsonManagedReference
-    @OneToMany(mappedBy="productDetail", orphanRemoval=true, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("product")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<ProductDetail> productDetail =new ArrayList<ProductDetail>();
+    @OneToMany(mappedBy="products")
+    private List<ProductDetail> productDetail;
+
+    public Product(ProductCreateDTO dto) {
+//        this.id = dto.getId();
+        this.content = dto.getContent();
+        this.contentShort = dto.getContentShort();
+        this.image = dto.getImage();
+        this.linkOrder = dto.getLinkOrder();
+        this.name = dto.getName();
+        this.slug = dto.getSlug();
+        this.status = dto.getStatus();
+    }
 }

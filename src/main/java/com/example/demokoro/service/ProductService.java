@@ -1,7 +1,6 @@
 package com.example.demokoro.service;
 
 import com.example.demokoro.dto.ProductDTOAdmin;
-import com.example.demokoro.models.Category;
 import com.example.demokoro.models.Product;
 import com.example.demokoro.repository.ProductRepository;
 import com.example.demokoro.serviceImpl.IProductService;
@@ -41,13 +40,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public boolean save(Product product) {
-        try {
-            productRepository.save(product);
-            return true;
-        }catch (Exception e){
-            return false;
-        }
+    public Product save(Product product) {
+        return productRepository.save(product);
     }
 
     @Override

@@ -5,13 +5,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductDetailDTO {
     private Integer id;
     private String codeName;
-    private String desc;
+    private String description;
     private String descShort;
     private Integer totalQuantity;
     private Integer validQuantity;
@@ -20,13 +22,13 @@ public class ProductDetailDTO {
     private Float discount;
     private String image;
     private Integer status;
-    private java.sql.Timestamp createdAt;
-    private java.sql.Timestamp updatedAt;
+    private Date createdAt;
+    private Date updatedAt;
 
     public ProductDetailDTO(ProductDetail pd){
         this.id = pd.getId();
         this.codeName = pd.getCodeName();
-        this.desc = pd.getDesc();
+        this.description = pd.getDescription();
         this.descShort = pd.getDescShort();
         this.totalQuantity = pd.getTotalQuantity();
         this.validQuantity = pd.getValidQuantity();

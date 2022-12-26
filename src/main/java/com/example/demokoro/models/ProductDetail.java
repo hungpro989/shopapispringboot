@@ -1,5 +1,6 @@
 package com.example.demokoro.models;
 
+import com.example.demokoro.dto.ProductDetailCreateDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "product_detail")
@@ -15,14 +17,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class ProductDetail {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
     @Column(name = "code_name")
     private String codeName;
 
-    @Column(name = "desc")
-    private String desc;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "desc_short")
     private String descShort;
@@ -49,15 +52,26 @@ public class ProductDetail {
     private Integer status;
 
     @Column(name = "created_at")
-    private java.sql.Timestamp createdAt;
+    private Date createdAt;
 
     @Column(name = "updated_at")
-    private java.sql.Timestamp updatedAt;
+    private Date updatedAt;
 
     //quan he vs product
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name="product_id")
-    @JsonIgnoreProperties("Product_Detail")
-    private ProductDetail productDetail;
+    @ManyToOne
+    private Product products;
+
+    public ProductDetail(ProductDetailCreateDTO dto) {
+//        this.id = dto.getId();
+        this.codeName = dto.getCodeName();
+        this.description = dto.getDescription();
+        this.descShort = dto.getDescShort();
+        this.totalQuantity = dto.getTotalQuantity();
+        this.validQuantity = dto.getValidQuantity();
+        this.holdQuantity = dto.getHoldQuantity();
+        this.price = dto.getPrice();
+        this.discount = dto.getDiscount();
+        this.image = dto.getImage();
+        this.status = dto.getStatus();
+    }
 }

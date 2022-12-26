@@ -28,10 +28,6 @@ public class Category {
     @Column(name = "stt")
     private Integer stt;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy="category", orphanRemoval=true, cascade = CascadeType.ALL)
-    @JsonIgnoreProperties("category")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
-    private List<CategoryProduct> categoryProduct =new ArrayList<CategoryProduct>();
+    @OneToMany(mappedBy="category")
+    private List<CategoryProduct> categoryProduct;
 }

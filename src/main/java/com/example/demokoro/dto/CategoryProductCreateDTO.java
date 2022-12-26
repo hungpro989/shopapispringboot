@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryProductDTO {
-    private Integer id;
+public class CategoryProductCreateDTO {
     private Integer categoryId;
-    private Integer productId;
-
 }

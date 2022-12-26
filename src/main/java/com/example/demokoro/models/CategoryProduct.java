@@ -1,7 +1,5 @@
 package com.example.demokoro.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +9,7 @@ import javax.persistence.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class CategoryProduct {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,19 +17,13 @@ public class CategoryProduct {
     private Integer id;
 
     //qhe voi category
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="category_id")
-    @JsonIgnoreProperties("product_category")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private Category category;
+
     //qhe voi product
-    @JsonBackReference
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="product_id")
-    @JsonIgnoreProperties("product_category")
-    @EqualsAndHashCode.Exclude
-    @ToString.Exclude
     private Product product;
+
 }
