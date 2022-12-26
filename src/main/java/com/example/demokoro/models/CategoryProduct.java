@@ -23,7 +23,7 @@ public class CategoryProduct {
 
     //qhe voi product
     @ManyToOne
-    @JoinColumn(name="product_id")
+    @JoinColumn(name="product_id", referencedColumnName = "id")
     private Product product;
 
 }

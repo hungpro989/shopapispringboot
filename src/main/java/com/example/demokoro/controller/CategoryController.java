@@ -52,8 +52,7 @@ public class CategoryController {
 
     @PutMapping("/category")
     public ResponseEntity<ResponseObject> update(@RequestBody Category category){
-        boolean checkIdExist = categoryService.checkExistId(category.getId());
-        if (checkIdExist) {
+        if (categoryService.checkExistId(category.getId())) {
             CategoryDTOAdmin c = categoryService.getCategoryById(category.getId());
             boolean checkNameExist = categoryService.checkExistName(category.getName());
             if(checkNameExist){
@@ -63,8 +62,8 @@ public class CategoryController {
                 }
                 return ResponseEntity.badRequest().body(new ResponseObject("error", "Cap nhat danh muc that bai", category));
             }else if(c.getName().equalsIgnoreCase(category.getName())){
-                boolean check = categoryService.save(category);
-                if(check) {
+//                boolean check = categoryService.save(category);
+                if(categoryService.save(category)) {
                     return ResponseEntity.ok().body(new ResponseObject("success", "Cap nhat danh muc thanh cong", category));
                 }
                 return ResponseEntity.badRequest().body(new ResponseObject("error", "Cap nhat danh muc that bai", category));

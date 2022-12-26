@@ -56,7 +56,7 @@ public class Product {
     private List<ProductDetail> productDetail;
 
     public Product(ProductCreateDTO dto) {
-//        this.id = dto.getId();
+        this.id = dto.getId();
         this.content = dto.getContent();
         this.contentShort = dto.getContentShort();
         this.image = dto.getImage();

@@ -62,7 +62,7 @@ public class ProductDetail {
     private Product products;
 
     public ProductDetail(ProductDetailCreateDTO dto) {
-//        this.id = dto.getId();
+        this.id = dto.getId();
         this.codeName = dto.getCodeName();
         this.description = dto.getDescription();
         this.descShort = dto.getDescShort();

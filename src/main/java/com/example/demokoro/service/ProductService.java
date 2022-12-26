@@ -56,7 +56,7 @@ public class ProductService implements IProductService {
     @Override
     public boolean checkExistId(Integer id) {
         Product p = productRepository.findById(id).orElse(null);
-        if(p==null){
+        if(p!=null){
             return true;
         }
         return false;
