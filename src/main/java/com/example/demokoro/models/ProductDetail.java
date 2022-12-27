@@ -58,7 +58,8 @@ public class ProductDetail {
     private Date updatedAt;
 
     //quan he vs product
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="product_id")
     private Product products;
 
     public ProductDetail(ProductDetailCreateDTO dto) {

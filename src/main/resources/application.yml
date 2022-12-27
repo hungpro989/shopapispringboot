@@ -10,7 +10,7 @@ spring:
     password: n01s4ud3mv4ng
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     properties:
-      hibernate.format_sql: true
+      hibernate.format_sql: false
     show-sql: true

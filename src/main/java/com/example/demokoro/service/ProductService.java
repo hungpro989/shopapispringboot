@@ -35,8 +35,8 @@ public class ProductService implements IProductService {
     }
 
     @Override
-    public boolean deleteById(Integer id) {
-        return false;
+    public void deleteById(Integer id) {
+        productRepository.deleteById(id);
     }
 
     @Override

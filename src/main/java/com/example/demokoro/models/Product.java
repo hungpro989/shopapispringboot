@@ -48,11 +48,11 @@ public class Product {
     private java.sql.Timestamp updatedAt;
 
     //quan hệ với category
-    @OneToMany(mappedBy="product")
+    @OneToMany(mappedBy="product", cascade = CascadeType.ALL)
     private List<CategoryProduct> categoryProduct;
 
     //quan hệ với product detail
-    @OneToMany(mappedBy="products")
+    @OneToMany(mappedBy="products", cascade = CascadeType.ALL)
     private List<ProductDetail> productDetail;
 
     public Product(ProductCreateDTO dto) {

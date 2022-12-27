@@ -22,7 +22,7 @@ public class CategoryProduct {
     private Category category;
 
     //qhe voi product
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="product_id", referencedColumnName = "id")
     private Product product;
 

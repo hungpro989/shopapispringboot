@@ -111,4 +111,8 @@ public class ProductController {
             }
         );
     }
+    @DeleteMapping("{id}")
+    public void deleteProduct(@PathVariable("id") Integer id) {
+        productService.deleteById(id);
+    }
 }
