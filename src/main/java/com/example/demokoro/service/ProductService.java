@@ -57,8 +57,10 @@ public class ProductService implements IProductService {
     public boolean checkExistId(Integer id) {
         Product p = productRepository.findById(id).orElse(null);
         if(p!=null){
+            //tồn tại trong db
             return true;
         }
+        //ko tồn tại trong db
         return false;
     }
 }
