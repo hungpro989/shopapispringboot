@@ -28,7 +28,7 @@ public class BusinessController {
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Lay danh sach business that bai", null));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<ResponseObject> getProductById(@PathVariable Integer id){
+    public ResponseEntity<ResponseObject> getById(@PathVariable Integer id){
         if(businessService.checkExistId(id)){
             return ResponseEntity.ok().body(new ResponseObject("success", "Lấy sản phẩm thành công", businessService.getBusinessById(id)));
         }
