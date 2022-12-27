@@ -36,9 +36,9 @@ public class DeliveryController {
     public ResponseEntity<ResponseObject> delete(@PathVariable("id") Integer id){
         if(deliveryService.checkExistId(id)){
             deliveryService.deleteById(id);
-            return ResponseEntity.ok().body(new ResponseObject("success", "Xoá business thành công", null));
+            return ResponseEntity.ok().body(new ResponseObject("success", "Xoá delivery thành công", null));
         };
-        return ResponseEntity.badRequest().body(new ResponseObject("error", "Id business không tồn tại", null));
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Id delivery không tồn tại", null));
     }
     @PostMapping
     public ResponseEntity<ResponseObject> create(@RequestBody DeliveryDTO delivery){

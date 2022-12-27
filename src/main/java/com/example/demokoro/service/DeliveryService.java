@@ -2,7 +2,6 @@ package com.example.demokoro.service;
 
 import com.example.demokoro.dto.DeliveryDTO;
 import com.example.demokoro.models.Delivery;
-import com.example.demokoro.repository.BusinessRepository;
 import com.example.demokoro.repository.DeliveryRepository;
 import com.example.demokoro.serviceImpl.IDeliveryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,6 @@ import java.util.List;
 public class DeliveryService implements IDeliveryService {
     @Autowired
     DeliveryRepository deliveryRepository;
-    @Autowired
-    private BusinessRepository businessRepository;
-
     @Override
     public List<DeliveryDTO> getAll() {
         List<DeliveryDTO> listDto = new ArrayList<>();
@@ -42,7 +38,7 @@ public class DeliveryService implements IDeliveryService {
     @Override
     public boolean deleteById(Integer id) {
         try{
-            businessRepository.deleteById(id);
+            deliveryRepository.deleteById(id);
             return true;
         }catch (Exception e) {
             return false;
