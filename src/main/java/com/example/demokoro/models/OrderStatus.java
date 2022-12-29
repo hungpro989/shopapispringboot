@@ -1,12 +1,12 @@
 package com.example.demokoro.models;
 
-import com.example.demokoro.dto.DeliveryDTO;
 import com.example.demokoro.dto.OrderStatusDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "order_status")
@@ -28,10 +28,11 @@ public class OrderStatus {
     @Column(name = "stt")
     private Integer stt;
 
+    @OneToMany(mappedBy = "orderStatus")
+    private List<Order> order;
     public OrderStatus(OrderStatusDTO dto) {
         this.id=dto.getId();
         this.name=dto.getName();
-        this.status=dto.getStatus();
-        this.stt=dto.getStt();
     }
+//1-n
 }
