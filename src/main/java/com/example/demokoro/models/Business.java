@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "business")
@@ -21,8 +22,8 @@ public class Business {
     @Column(name = "code_name")
     private String codeName;
 
-    @Column(name = "full_name")
-    private String fullName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "address")
     private String address;
@@ -33,10 +34,12 @@ public class Business {
     @Column(name = "status")
     private boolean status;
 
+    @OneToMany(mappedBy = "business")
+    private List<Order> order;
     public Business(BusinessDTO dto){
         this.id = dto.getId();
         this.codeName=dto.getCodeName();
-        this.fullName=dto.getFullName();
+        this.name=dto.getName();
         this.phone=dto.getPhone();
         this.address=dto.getAddress();
         this.status=dto.isStatus();

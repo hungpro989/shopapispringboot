@@ -21,8 +21,8 @@ public class Delivery {
     @Column(name = "code_name")
     private String codeName;
 
-    @Column(name = "full_name")
-    private String fullName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "token")
     private String token;
@@ -30,7 +30,7 @@ public class Delivery {
     public Delivery(DeliveryDTO dto) {
         this.id=dto.getId();
         this.codeName=dto.getCodeName();
-        this.fullName=dto.getFullName();
+        this.name=dto.getName();
         this.token=dto.getToken();
     }
 }

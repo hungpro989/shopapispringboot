@@ -1,11 +1,13 @@
 package com.example.demokoro.dto;
 
 import com.example.demokoro.models.Delivery;
+import com.example.demokoro.models.Order;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -13,13 +15,15 @@ import javax.persistence.*;
 public class DeliveryDTO {
     private Integer id;
     private String codeName;
-    private String fullName;
+    private String name;
     private String token;
 
+    @OneToMany(mappedBy = "delivery")
+    private List<Order> order;
     public DeliveryDTO(Delivery d){
         this.id=d.getId();
         this.codeName=d.getCodeName();
-        this.fullName=d.getFullName();
+        this.name=d.getName();
         this.token=d.getToken();
     }
 }

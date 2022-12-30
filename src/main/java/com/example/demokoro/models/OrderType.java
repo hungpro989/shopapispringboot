@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "order_type")
@@ -28,6 +29,8 @@ public class OrderType {
     @Column(name = "stt")
     private Integer stt;
 
+    @OneToMany(mappedBy = "orderType")
+    private List<Order> order;
     public OrderType(OrderTypeDTO dto) {
         this.id=dto.getId();
         this.name=dto.getName();

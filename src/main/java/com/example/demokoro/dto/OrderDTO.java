@@ -1,7 +1,6 @@
 package com.example.demokoro.dto;
 
-import com.example.demokoro.models.Order;
-import com.example.demokoro.models.OrderStatus;
+import com.example.demokoro.models.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,10 +15,10 @@ public class OrderDTO {
 
     private Integer sellerId;
     private Integer creatorId;
-    private Integer businessId;
-    private Integer deliveryId;
+    //private Integer businessId;
+    //private Integer deliveryId;
     //private Integer statusId;
-    private Integer typeId;
+   // private Integer typeId;
     private double totalMoney;
     private double productMoney;
     private double shippingPrice;
@@ -38,14 +37,17 @@ public class OrderDTO {
     private java.sql.Timestamp createdAt;
     private java.sql.Timestamp updatedAt;
     private OrderStatusDTO orderStatusDTO;
+    private  BusinessDTO businessDTO;
+    private  DeliveryDTO deliveryDTO;
+    private  OrderTypeDTO orderTypeDTO;
     public OrderDTO(Order o) {
         this.id = o.getId();
         this.sellerId = o.getSellerId();
         this.creatorId = o.getCreatorId();
-        this.businessId = o.getBusinessId();
-        this.deliveryId = o.getDeliveryId();
+//        this.businessId = o.getBusinessId();
+        //this.deliveryId = o.getDeliveryId();
         //this.statusId = o.getStatusId();
-        this.typeId = o.getTypeId();
+        //this.typeId = o.getTypeId();
         this.totalMoney = o.getTotalMoney();
         this.productMoney = o.getProductMoney();
         this.shippingPrice = o.getShippingPrice();
@@ -70,5 +72,17 @@ public class OrderDTO {
         orderStatusDTO.setId(orderStatus.getId());
         orderStatusDTO.setName(orderStatus.getName());
         this.orderStatusDTO = orderStatusDTO;
+
+        //lấy ra business
+        Business business = o.getBusiness();
+        this.businessDTO = new BusinessDTO(business);
+
+        //lấy delivery
+        Delivery delivery = o.getDelivery();
+        this.deliveryDTO = new DeliveryDTO(delivery);
+
+        //lấy order type
+        OrderType orderType = o.getOrderType();
+        this.orderTypeDTO = new OrderTypeDTO(orderType);
     }
 }

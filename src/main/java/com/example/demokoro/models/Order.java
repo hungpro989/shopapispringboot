@@ -24,17 +24,17 @@ public class Order {
     @Column(name = "creator_id")
     private Integer creatorId;
 
-    @Column(name = "business_id")
-    private Integer businessId;
+//    @Column(name = "business_id")
+//    private Integer businessId;
 
-    @Column(name = "delivery_id")
-    private Integer deliveryId;
+//    @Column(name = "delivery_id")
+//    private Integer deliveryId;
 
 //    @Column(name = "status_id")
 //    private Integer statusId;
 
-    @Column(name = "type_id")
-    private Integer typeId;
+//    @Column(name = "type_id")
+//    private Integer typeId;
 
     @Column(name = "total_money")
     private Double totalMoney;
@@ -90,14 +90,22 @@ public class Order {
     @ManyToOne()
     private OrderStatus orderStatus;
 
+    @ManyToOne()
+    private Business business;
+
+    @ManyToOne()
+    private Delivery delivery;
+
+    @ManyToOne()
+    private OrderType orderType;
     public Order(OrderDTO dto) {
         this.id = dto.getId();
         this.sellerId = dto.getSellerId();
         this.creatorId = dto.getCreatorId();
-        this.businessId = dto.getBusinessId();
-        this.deliveryId = dto.getDeliveryId();
+//        this.businessId = dto.getBusinessId();
+        //this.deliveryId = dto.getDeliveryId();
 
-        this.typeId = dto.getTypeId();
+        //this.typeId = dto.getTypeId();
         this.totalMoney = dto.getTotalMoney();
         this.productMoney = dto.getProductMoney();
         this.shippingPrice = dto.getShippingPrice();

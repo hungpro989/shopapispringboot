@@ -16,7 +16,7 @@ import javax.persistence.Id;
 public class BusinessDTO {
     private Integer id;
     private String codeName;
-    private String fullName;
+    private String name;
     private String address;
     private String phone;
     private boolean status;
@@ -24,7 +24,7 @@ public class BusinessDTO {
     public BusinessDTO(Business b){
         this.id=b.getId();
         this.codeName=b.getCodeName();
-        this.fullName=b.getFullName();
+        this.name=b.getName();
         this.address=b.getAddress();
         this.phone=b.getPhone();
         this.status=b.isStatus();
