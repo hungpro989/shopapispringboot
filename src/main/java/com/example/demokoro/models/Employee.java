@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "employee")
@@ -43,6 +44,11 @@ public class Employee {
 
     @Column(name = "status")
     private boolean status;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Order> order;
+
+
 
     public Employee(EmployeeDTO dto){
         this.id = dto.getId();

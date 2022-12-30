@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -18,11 +19,11 @@ public class Order {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "seller_id")
-    private Integer sellerId;
-
-    @Column(name = "creator_id")
-    private Integer creatorId;
+//    @Column(name = "seller_id")
+//    private Integer sellerId;
+//
+//    @Column(name = "creator_id")
+//    private Integer creatorId;
 
 //    @Column(name = "business_id")
 //    private Integer businessId;
@@ -86,26 +87,32 @@ public class Order {
 
     @Column(name = "updated_at")
     private java.sql.Timestamp updatedAt;
-
+//status
     @ManyToOne()
     private OrderStatus orderStatus;
-
+//bussiness
     @ManyToOne()
     private Business business;
-
+//delivery
     @ManyToOne()
     private Delivery delivery;
-
+//type
     @ManyToOne()
     private OrderType orderType;
+    //seller
+    @ManyToOne()
+    @JoinColumn(name = "employee_id", nullable=false)
+    private Employee employee;
+    //creator
+    @ManyToOne()
+    @JoinColumn(name = "creator_id", nullable=false)
+    private Employee employee1;
+
+    //order detail
+    @OneToMany(mappedBy="orders", cascade = CascadeType.ALL)
+    private List<OrderDetail> orderDetail;
     public Order(OrderDTO dto) {
         this.id = dto.getId();
-        this.sellerId = dto.getSellerId();
-        this.creatorId = dto.getCreatorId();
-//        this.businessId = dto.getBusinessId();
-        //this.deliveryId = dto.getDeliveryId();
-
-        //this.typeId = dto.getTypeId();
         this.totalMoney = dto.getTotalMoney();
         this.productMoney = dto.getProductMoney();
         this.shippingPrice = dto.getShippingPrice();

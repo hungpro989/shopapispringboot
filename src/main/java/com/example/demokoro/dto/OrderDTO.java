@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -13,7 +14,7 @@ import java.util.List;
 public class OrderDTO {
     private Integer id;
 
-    private Integer sellerId;
+    //private Integer sellerId;
     private Integer creatorId;
     //private Integer businessId;
     //private Integer deliveryId;
@@ -40,10 +41,13 @@ public class OrderDTO {
     private  BusinessDTO businessDTO;
     private  DeliveryDTO deliveryDTO;
     private  OrderTypeDTO orderTypeDTO;
+    private EmployeeOrderDTO employeeOrderDTO;
+    private EmployeeOrderDTO employeeCreatorOrderDTO;
+    private List<OrderDetailDTO> orderDetail;
     public OrderDTO(Order o) {
         this.id = o.getId();
-        this.sellerId = o.getSellerId();
-        this.creatorId = o.getCreatorId();
+        //this.sellerId = o.getSellerId();
+        //this.creatorId = o.getCreatorId();
 //        this.businessId = o.getBusinessId();
         //this.deliveryId = o.getDeliveryId();
         //this.statusId = o.getStatusId();
@@ -84,5 +88,24 @@ public class OrderDTO {
         //lấy order type
         OrderType orderType = o.getOrderType();
         this.orderTypeDTO = new OrderTypeDTO(orderType);
+
+        //lấy employee
+        Employee employee = o.getEmployee();
+        this.employeeOrderDTO = new EmployeeOrderDTO(employee);
+        //lay creator
+        Employee creator = o.getEmployee1();
+        this.employeeCreatorOrderDTO = new EmployeeOrderDTO(creator);
+
+        //lay danh sach order detail
+        List<OrderDetail> orderDetail = o.getOrderDetail();//lay ra
+        List<OrderDetailDTO> orderDetailDTO = new ArrayList<>();//tao mang moi
+        orderDetail.forEach(p-> {
+            orderDetailDTO.add(new OrderDetailDTO(p));
+        });
+        this.orderDetail = orderDetailDTO;
     }
+
+
+
+
 }

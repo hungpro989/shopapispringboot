@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "product_detail")
@@ -61,6 +62,10 @@ public class ProductDetail {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="product_id")
     private Product products;
+
+    //quan hệ với order detail
+    @OneToMany(mappedBy = "productDetail")
+    private List<OrderDetail> orderDetail;
 
     public ProductDetail(ProductDetailCreateDTO dto) {
         this.id = dto.getId();
