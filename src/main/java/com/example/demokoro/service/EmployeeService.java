@@ -1,9 +1,7 @@
 package com.example.demokoro.service;
 
 import com.example.demokoro.dto.EmployeeDTO;
-import com.example.demokoro.dto.OrderTypeDTO;
 import com.example.demokoro.models.Employee;
-import com.example.demokoro.models.OrderType;
 import com.example.demokoro.repository.EmployeeRepository;
 import com.example.demokoro.serviceImpl.IEmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,11 +25,9 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public EmployeeDTO getById(Integer id) {
-        EmployeeDTO dto = new EmployeeDTO();
         if(employeeRepository.findById(id).isPresent()){
-            Employee employe = employeeRepository.findById(id).get();
-            dto = new EmployeeDTO(employe);
-            return dto;
+            Employee employee = employeeRepository.findById(id).get();
+            return new EmployeeDTO(employee);
         }
         return null;
     }
@@ -58,33 +54,23 @@ public class EmployeeService implements IEmployeeService {
 
     @Override
     public boolean checkExistEmail(String email) {
-        if(employeeRepository.findEmployeeByEmail(email)!=null){
-            return true;
-        }
-        return false;
+        return employeeRepository.findEmployeeByEmail(email) != null;
     }
 
     @Override
     public boolean checkExistPhone(String phone) {
-        if(employeeRepository.findEmployeeByPhone(phone)!=null){
-            return true;
-        }
-        return false;
+        return employeeRepository.findEmployeeByPhone(phone) != null;
     }
 
     @Override
     public boolean checkExistId(Integer id) {
-        if(employeeRepository.findById(id).orElse(null)!=null){
-            return true;
-        }
-        return false;
+        return employeeRepository.findById(id).orElse(null) != null;
     }
 
     @Override
     public List<Employee> findEmployeeWhereNotId(Integer id, String email, String phone) {
         try {
-            List<Employee> list = employeeRepository.getEmployeeWhereNotId(id, email, phone);
-            return list;
+            return employeeRepository.getEmployeeWhereNotId(id, email, phone);
         } catch (Exception e) {
             return null;
         }

@@ -1,10 +1,12 @@
 package com.example.demokoro.models;
 
+import com.example.demokoro.dto.OrderDetailDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "order_detail")
@@ -36,4 +38,12 @@ public class OrderDetail {
     @ManyToOne
     @JoinColumn(name = "pro_de_id")
     private ProductDetail productDetail;
+
+    public OrderDetail(OrderDetailDTO dto) {
+        this.id = dto.getId();
+        this.price =dto.getPrice();
+        this.quantity = dto.getQuantity();
+        this.createdAt = dto.getCreatedAt();
+        this.updatedAt = dto.getUpdatedAt();
+    }
 }
