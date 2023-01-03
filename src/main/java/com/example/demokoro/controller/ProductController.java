@@ -28,11 +28,7 @@ public class ProductController {
     @Autowired
     private CategoryProductService categoryProductService;
     @Autowired
-    private CategoryService categoryService;
-    @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private ProductRepository productRepository;
 
     @GetMapping
     public ResponseEntity<ResponseObject> getAllProduct(){
@@ -73,8 +69,7 @@ public class ProductController {
             if(productService.checkExistName(p.getName())){
                 categoryProductService.deleteById(p.getId());
                 productService.save(p);
-                categoryProductService.deleteById(p.getId());
-                createCategoryProduct(product, p);
+                //createCategoryProduct(product, p);
                 createProductDetail(product,p);
                 return ResponseEntity.ok().body(new ResponseObject("success", "Update sản phẩm mới thành công1", product));
             }else if(proDto.getName().equalsIgnoreCase(p.getName())){
@@ -92,8 +87,7 @@ public class ProductController {
     // tạo category product
     private void createCategoryProduct(@RequestBody ProductCreateDTO product, Product p) {
         product.getCategoryProduct().forEach(var->{
-            Category category = new Category();
-            category = categoryRepository.findById(var.getCategoryId()).orElse(null);
+            Category category = categoryRepository.findById(var.getCategoryId()).orElse(null);
             if (category!=null){
                 CategoryProduct categoryProduct = new CategoryProduct();
                 categoryProduct.setProduct(p);

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -35,8 +36,8 @@ public class OrderDTO {
     private String address;
     private java.sql.Timestamp orderTime;
     private java.sql.Timestamp shippingTime;
-    private java.sql.Timestamp createdAt;
-    private java.sql.Timestamp updatedAt;
+    private Date createdAt;
+    private Date updatedAt;
     private OrderStatusDTO orderStatusDTO;
     private  BusinessDTO businessDTO;
     private  DeliveryDTO deliveryDTO;
@@ -72,10 +73,7 @@ public class OrderDTO {
 
         // lấy ra statusOrder
         OrderStatus orderStatus = o.getOrderStatus();
-        OrderStatusDTO orderStatusDTO = new OrderStatusDTO();
-        orderStatusDTO.setId(orderStatus.getId());
-        orderStatusDTO.setName(orderStatus.getName());
-        this.orderStatusDTO = orderStatusDTO;
+        this.orderStatusDTO = new OrderStatusDTO(orderStatus);
 
         //lấy ra business
         Business business = o.getBusiness();

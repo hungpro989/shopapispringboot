@@ -1,12 +1,12 @@
 package com.example.demokoro.controller;
 
+import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
 import com.example.demokoro.dto.ProductCreateDTO;
 import com.example.demokoro.dto.ResponseObject;
-import com.example.demokoro.models.Order;
-import com.example.demokoro.models.OrderDetail;
-import com.example.demokoro.models.Product;
-import com.example.demokoro.models.ProductDetail;
+import com.example.demokoro.models.*;
+import com.example.demokoro.repository.OrderStatusRepository;
+import com.example.demokoro.service.OrderDetailService;
 import com.example.demokoro.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,11 @@ import java.util.List;
 public class OrderController {
     @Autowired
     OrderService orderService;
+    @Autowired
+    OrderDetailService orderDetailService;
+    @Autowired
+    private OrderStatusRepository orderStatusRepository;
+
     //get all
     @GetMapping
     public ResponseEntity<ResponseObject> getAll(){
@@ -79,28 +84,38 @@ public class OrderController {
         if (!listDto.isEmpty()) {
             return ResponseEntity.ok().body(new ResponseObject("success", "Lấy danh sách đơn hàng thành công", listDto));
         }
-        return ResponseEntity.badRequest().body(new ResponseObject("error", "Lấy danh sách đơn hàng thất bại", start+","+end));
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Lấy danh sách đơn hàng thất bại", null));
     }
-    @PostMapping("/{id}")
-    public ResponseEntity<ResponseObject> createOrder(@RequestBody OrderDTO orderDTO){
-        Order o = new Order(orderDTO);
-        try{
-            if(orderService.save(o)!=null){
-                //save orderdetail
-                OrderDetail orderDetail = new OrderDetail();
-                orderDTO.getOrderDetail().forEach(var->{
-                    orderDetail.setOrders(o);
-                    //orderDetailService.save(orderDetail);
-                });
+//    @PostMapping
+//    public ResponseEntity<ResponseObject> createOrder(@RequestBody OrderCreateDTO dto){
+//
+//        Order o = new Order(dto);
+//        OrderStatus  os = orderStatusRepository.findById(dto.getStatusId()).orElse(null);
+//        System.out.println(os);
+//        OrderType ot = new OrderType(orderDTO.getOrderTypeDTO());
+//        Business b = new Business(orderDTO.getBusinessDTO());
+//        Delivery d = new Delivery(orderDTO.getDeliveryDTO());
+        //o.setOrderStatus(os);
+//        o.setOrderType(ot);
+//        o.setBusiness(b);
+//        o.setDelivery(d);
 
-                //save product detail
-                //createProductDetail(product,p);
-                return ResponseEntity.ok().body(new ResponseObject("success", "Tạo sản phẩm mới thành công", orderDTO));
-            }
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo sản phẩm thất bại1", null));
-        }
-        return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo sản phẩm thất bại2", null));
-    }
+//        try{
+//            if(orderService.save(o)!=null){
+//                //save order detail
+////                orderDTO.getOrderDetail().forEach(var->{
+////                    OrderDetail orderDetail = new OrderDetail(var);
+////                    orderDetail.setOrders(o);
+////                    //orderDetail.setProductDetail(orderDTO.getOrderDetail();
+////                    orderDetailService.save(orderDetail);
+////                });
+//
+//                return ResponseEntity.ok().body(new ResponseObject("success", "Tạo sản phẩm mới thành công", orderDTO));
+//            }
+//        }catch (Exception e) {
+//            return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo sản phẩm thất bại1", null));
+//        }
+//        return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo sản phẩm thất bại2", null));
+//    }
 //
 }

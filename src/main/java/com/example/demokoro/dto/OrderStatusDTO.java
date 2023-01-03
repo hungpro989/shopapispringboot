@@ -24,11 +24,11 @@ public class OrderStatusDTO {
 //        this.status=d.getStatus();
 //        this.stt=d.getStt();
         //list order
-        List<Order> orders = d.getOrder();//lay ra
-        List<OrderDTO> orderDTO = new ArrayList<>();//tao mang moi
-        orders.forEach(p-> {
-            orderDTO.add(new OrderDTO(p));
-        });
+//        List<Order> orders = d.getOrder();//lay ra
+//        List<OrderDTO> orderDTO = new ArrayList<>();//tao mang moi
+//        orders.forEach(p-> {
+//            orderDTO.add(new OrderDTO(p));
+//        });
         //this.orderDTO = orderDTO;
     }
 }

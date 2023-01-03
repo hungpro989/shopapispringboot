@@ -1,11 +1,21 @@
 package com.example.demokoro.models;
 
+import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
+import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -82,15 +92,22 @@ public class Order {
     @Column(name = "shipping_time")
     private java.sql.Timestamp shippingTime;
 
-    @Column(name = "created_at")
-    private java.sql.Timestamp createdAt;
+    @CreationTimestamp
+    @Column(name = "created_at", updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date createdAt;
 
+    @UpdateTimestamp
     @Column(name = "updated_at")
-    private java.sql.Timestamp updatedAt;
+    @LastModifiedDate
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date updatedAt;
+
 //status
     @ManyToOne()
     private OrderStatus orderStatus;
-//bussiness
+//business
     @ManyToOne()
     private Business business;
 //delivery
@@ -132,6 +149,23 @@ public class Order {
         this.updatedAt = dto.getUpdatedAt();
 
     }
-//n-1
+
+    public Order(OrderCreateDTO orderCreateDTO) {
+        this.id = orderCreateDTO.getId();
+        this.totalMoney = orderCreateDTO.getTotalMoney();
+        this.productMoney = orderCreateDTO.getProductMoney();
+        this.shippingPrice = orderCreateDTO.getShippingPrice();
+        this.discount = orderCreateDTO.getDiscount();
+        this.paid = orderCreateDTO.getPaid();
+        this.paymentAmount = orderCreateDTO.getPaymentAmount();
+        this.customerId = orderCreateDTO.getCustomerId();
+        this.billCode = orderCreateDTO.getBillCode();
+        this.internalNotes = orderCreateDTO.getInternalNotes();
+        this.shippingNotes = orderCreateDTO.getShippingNotes();
+        this.name = orderCreateDTO.getName();
+        this.phone = orderCreateDTO.getPhone();
+        this.address = orderCreateDTO.getAddress();
+        this.orderTime = orderCreateDTO.getOrderTime();
+    }
 
 }
