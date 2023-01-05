@@ -24,7 +24,7 @@ public class ProductDTOAdmin {
     private String slug;
     private Byte status;
     private java.sql.Timestamp updatedAt;
-    private List<CategoryDTOAdmin> category;
+    private List<CategoryDTOAdmin> categoryProduct;
     private List<ProductDetailDTO> productDetail;
     public ProductDTOAdmin(Product product) {
         this.id = product.getId();
@@ -41,17 +41,26 @@ public class ProductDTOAdmin {
         //category
         List<CategoryProduct> productCategories = product.getCategoryProduct();
         List<CategoryDTOAdmin> categoryDTOAdmin= new ArrayList<>();
-        productCategories.forEach(c -> {
-            categoryDTOAdmin.add(new CategoryDTOAdmin(c));
-        });
-        this.category = categoryDTOAdmin;
+        if(productCategories==null){
+            this.categoryProduct = categoryDTOAdmin;
+        }else{
+            productCategories.forEach(c -> {
+                categoryDTOAdmin.add(new CategoryDTOAdmin(c));
+            });
+            this.categoryProduct = categoryDTOAdmin;
+        }
+
 
         //product detail
         List<ProductDetail> productDetail = product.getProductDetail();//lay ra
         List<ProductDetailDTO> productDetailDTO = new ArrayList<>();//tao mang moi
-        productDetail.forEach(p-> {
-            productDetailDTO.add(new ProductDetailDTO(p));
-        });
-        this.productDetail = productDetailDTO;
+        if(productDetail==null){
+            this.productDetail = productDetailDTO;
+        }else {
+            productDetail.forEach(p -> {
+                productDetailDTO.add(new ProductDetailDTO(p));
+            });
+            this.productDetail = productDetailDTO;
+        }
     }
 }

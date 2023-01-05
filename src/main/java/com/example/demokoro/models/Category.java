@@ -28,6 +28,6 @@ public class Category {
     @Column(name = "stt")
     private Integer stt;
 
-    @OneToMany(mappedBy="category")
+    @OneToMany(mappedBy="category",cascade = CascadeType.ALL)
     private List<CategoryProduct> categoryProduct;
 }

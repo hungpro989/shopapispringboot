@@ -3,6 +3,7 @@ package com.example.demokoro.models;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "category_product")
@@ -18,11 +19,11 @@ public class CategoryProduct {
 
     //qhe voi category
     @ManyToOne
-    @JoinColumn(name="category_id")
+    @JoinColumn(name="category_id", referencedColumnName = "id")
     private Category category;
 
     //qhe voi product
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name="product_id", referencedColumnName = "id")
     private Product product;
 

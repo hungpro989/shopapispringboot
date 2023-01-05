@@ -1,6 +1,7 @@
 package com.example.demokoro.models;
 
 import com.example.demokoro.dto.ProductDetailCreateDTO;
+import com.example.demokoro.dto.ProductDetailDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -79,5 +80,19 @@ public class ProductDetail {
         this.discount = dto.getDiscount();
         this.image = dto.getImage();
         this.status = dto.getStatus();
+    }
+
+    public ProductDetail(ProductDetailDTO var) {
+        this.id = var.getId();
+        this.codeName = var.getCodeName();
+        this.description = var.getDescription();
+        this.descShort = var.getDescShort();
+        this.totalQuantity = var.getTotalQuantity();
+        this.validQuantity = var.getValidQuantity();
+        this.holdQuantity = var.getHoldQuantity();
+        this.price = var.getPrice();
+        this.discount = var.getDiscount();
+        this.image = var.getImage();
+        this.status = var.getStatus();
     }
 }

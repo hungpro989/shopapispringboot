@@ -5,21 +5,28 @@ import com.example.demokoro.repository.CategoryProductRepository;
 import com.example.demokoro.serviceImpl.ICategoryProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+import java.util.List;
 
 @Service
 public class CategoryProductService implements ICategoryProductService {
     @Autowired
     CategoryProductRepository categoryProductRepository;
     @Override
-    public CategoryProduct save(CategoryProduct cp) {
-        return categoryProductRepository.save(cp);
+    public void save(CategoryProduct cp) {
+        categoryProductRepository.save(cp);
     }
 
     @Override
-    public void deleteById(Integer product_id) {
-        categoryProductRepository.deleteByProductId(product_id);
+    public void deleteById(Integer id) {
+        categoryProductRepository.deleteCategoryProductByProductId(id);
+    }
+
+    @Override
+    public List<CategoryProduct> findCategoryProductByProductId(Integer id) {
+
+        return categoryProductRepository.findCategoryProductByProductId(id);
     }
 
 

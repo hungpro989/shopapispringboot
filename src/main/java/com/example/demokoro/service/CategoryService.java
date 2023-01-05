@@ -6,11 +6,13 @@ import com.example.demokoro.repository.CategoryRepository;
 import com.example.demokoro.serviceImpl.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class CategoryService implements ICategoryService {
     @Autowired
     CategoryRepository categoryRepository;

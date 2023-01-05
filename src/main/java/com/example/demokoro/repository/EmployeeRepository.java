@@ -3,9 +3,10 @@ package com.example.demokoro.repository;
 import com.example.demokoro.models.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
-
+@Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     Employee findEmployeeByPhone(String phone);
     Employee findEmployeeByEmail(String email);

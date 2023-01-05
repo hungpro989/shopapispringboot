@@ -23,4 +23,15 @@ public class ProductCreateDTO {
     private Byte status;
     private List<ProductDetailCreateDTO> productDetail;
     private List<CategoryProductCreateDTO> categoryProduct;
+
+    public ProductCreateDTO(ProductDTOAdmin productDTOAdmin) {
+        this.name = productDTOAdmin.getName();
+        this.slug = productDTOAdmin.getSlug();
+        this.content = productDTOAdmin.getContent();
+        this.contentShort = productDTOAdmin.getContentShort();
+        this.image=productDTOAdmin.getImage();
+        this.linkOrder = productDTOAdmin.getLinkOrder();
+        this.status=productDTOAdmin.getStatus();
+
+    }
 }

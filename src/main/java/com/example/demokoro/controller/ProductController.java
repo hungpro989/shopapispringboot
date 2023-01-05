@@ -28,7 +28,11 @@ public class ProductController {
     @Autowired
     private CategoryProductService categoryProductService;
     @Autowired
+    private CategoryService categoryService;
+    @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @GetMapping
     public ResponseEntity<ResponseObject> getAllProduct(){
@@ -48,65 +52,47 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ResponseObject> createProduct(@RequestBody ProductCreateDTO product){
         Product p = new Product(product);
-        try{
-            if(productService.save(p)!=null){
+
+            if(productService.save(p)){
                 //save category_product
-                createCategoryProduct(product, p);
+                productService.createCategoryProduct(product, p);
                 //save product detail
-                createProductDetail(product,p);
+                productService.createProductDetail(product,p);
                 return ResponseEntity.ok().body(new ResponseObject("success", "Tạo sản phẩm mới thành công", product));
             }
-        }catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo sản phẩm thất bại1", null));
-        }
+
+
+
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo sản phẩm thất bại2", null));
     }
     @PutMapping("/{id}")
+    @Transactional
     public ResponseEntity<ResponseObject> updateProduct(@RequestBody ProductCreateDTO product, @PathVariable Integer id){
-        ProductDTOAdmin proDto = productService.getProducById(id);
-        if(id == product.getId() && proDto!=null){
-            Product p = new Product(product);
-            if(productService.checkExistName(p.getName())){
-                categoryProductService.deleteById(p.getId());
-                productService.save(p);
-                //createCategoryProduct(product, p);
-                createProductDetail(product,p);
-                return ResponseEntity.ok().body(new ResponseObject("success", "Update sản phẩm mới thành công1", product));
-            }else if(proDto.getName().equalsIgnoreCase(p.getName())){
-                categoryProductService.deleteById(p.getId());
-                productService.save(p);
-                createCategoryProduct(product, p);
-                createProductDetail(product,p);
-                return ResponseEntity.ok().body(new ResponseObject("success", "Update sản phẩm mới thành công2", product));
-            }else{
-                return ResponseEntity.badRequest().body(new ResponseObject("error", "Tên sp đã tồn tại", null));
-            }
+        String check = productService.updateAndCheckProduct(product,id);
+        if(check=="true"){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Cập nhật sản phẩm mới thành công", null));
+        }else if(check=="false01"){
+            return ResponseEntity.badRequest().body(new ResponseObject("error", "Đã tồn tại tên sản phẩm: "+product.getName(), null));
+        }else if(check=="false02"){
+            return ResponseEntity.badRequest().body(new ResponseObject("error", "Id sản phẩm không đúng hoặc không khớp, ID trên url= "+id+" hoặc Id trong mục sản phẩm= "+product.getId(),null));
         }
-        return ResponseEntity.badRequest().body(new ResponseObject("error", "Id sản phẩm ko tồn tại", null));
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Lỗi nội bộ", null));
     }
     // tạo category product
-    private void createCategoryProduct(@RequestBody ProductCreateDTO product, Product p) {
-        product.getCategoryProduct().forEach(var->{
-            Category category = categoryRepository.findById(var.getCategoryId()).orElse(null);
-            if (category!=null){
-                CategoryProduct categoryProduct = new CategoryProduct();
-                categoryProduct.setProduct(p);
-                categoryProduct.setCategory(category);
-                categoryProductService.save(categoryProduct);
-            }
-        });
-    }
-    //tạo product detail
-    private void createProductDetail(@RequestBody ProductCreateDTO product, Product p) {
-        product.getProductDetail().forEach(var -> {
-                ProductDetail productDetail = new ProductDetail(var);
-                productDetail.setProducts(p);
-                productDetailService.save(productDetail);
-            }
-        );
-    }
+
     @DeleteMapping("{id}")
     public void deleteProduct(@PathVariable("id") Integer id) {
         productService.deleteById(id);
+    }
+    //copy product mới
+    @PostMapping("/{id}")
+    public ResponseEntity<ResponseObject> copyProduct(@PathVariable Integer id){
+        String check = productService.copyProduct(id);
+        if(check=="true"){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Copy sản phẩm mới thành công", null));
+        }else if(check=="false") {
+            return ResponseEntity.badRequest().body(new ResponseObject("error", "Copy sản phẩm thất bại", null));
+        }
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Copy sản phẩm thất bại", null));
     }
 }

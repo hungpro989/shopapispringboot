@@ -1,8 +1,7 @@
 package com.example.demokoro.models;
 
 import com.example.demokoro.dto.ProductCreateDTO;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.example.demokoro.dto.ProductDTOAdmin;
 import lombok.*;
 
 import javax.persistence.*;
@@ -64,4 +63,5 @@ public class Product {
         this.slug = dto.getSlug();
         this.status = dto.getStatus();
     }
+
 }
