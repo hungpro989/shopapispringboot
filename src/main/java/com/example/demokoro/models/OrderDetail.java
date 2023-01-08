@@ -15,6 +15,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 public class OrderDetail {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
@@ -41,6 +42,7 @@ public class OrderDetail {
 
     public OrderDetail(OrderDetailDTO dto) {
         this.id = dto.getId();
+//        this.productDetail = dto;
         this.price =dto.getPrice();
         this.quantity = dto.getQuantity();
         this.createdAt = dto.getCreatedAt();

@@ -29,24 +29,6 @@ public class Order {
     @Column(name = "id")
     private Integer id;
 
-//    @Column(name = "seller_id")
-//    private Integer sellerId;
-//
-//    @Column(name = "creator_id")
-//    private Integer creatorId;
-
-//    @Column(name = "business_id")
-//    private Integer businessId;
-
-//    @Column(name = "delivery_id")
-//    private Integer deliveryId;
-
-//    @Column(name = "status_id")
-//    private Integer statusId;
-
-//    @Column(name = "type_id")
-//    private Integer typeId;
-
     @Column(name = "total_money")
     private Double totalMoney;
 
@@ -68,7 +50,7 @@ public class Order {
     @Column(name = "customer_id")
     private Integer customerId;
 
-    @Column(name = "bill_code")
+    @Column(name = "bill_code", unique = true, nullable = false)
     private String billCode;
 
     @Column(name = "internal_notes")
@@ -85,12 +67,14 @@ public class Order {
 
     @Column(name = "address")
     private String address;
-
-    @Column(name = "order_time")
-    private java.sql.Timestamp orderTime;
+    @CreationTimestamp
+    @Column(name = "order_time", updatable = false)
+    @Temporal(TemporalType.TIMESTAMP)
+    @CreatedDate
+    private Date orderTime;
 
     @Column(name = "shipping_time")
-    private java.sql.Timestamp shippingTime;
+    private Date shippingTime;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)

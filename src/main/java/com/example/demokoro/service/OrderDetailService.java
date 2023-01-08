@@ -14,4 +14,6 @@ public class OrderDetailService implements IOrderDetailRepository {
     public OrderDetail save(OrderDetail orderDetail) {
         return orderDetailRepository.save(orderDetail);
     }
+
+
 }

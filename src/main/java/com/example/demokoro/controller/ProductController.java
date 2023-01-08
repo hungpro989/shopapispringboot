@@ -1,10 +1,7 @@
 package com.example.demokoro.controller;
 
 import com.example.demokoro.dto.*;
-import com.example.demokoro.models.Category;
-import com.example.demokoro.models.CategoryProduct;
 import com.example.demokoro.models.Product;
-import com.example.demokoro.models.ProductDetail;
 import com.example.demokoro.repository.CategoryRepository;
 import com.example.demokoro.repository.ProductRepository;
 import com.example.demokoro.service.CategoryProductService;
@@ -17,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Objects;
 
 @RequestMapping("/api/v1/products")
 @RestController
@@ -52,7 +50,6 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<ResponseObject> createProduct(@RequestBody ProductCreateDTO product){
         Product p = new Product(product);
-
             if(productService.save(p)){
                 //save category_product
                 productService.createCategoryProduct(product, p);
@@ -60,20 +57,17 @@ public class ProductController {
                 productService.createProductDetail(product,p);
                 return ResponseEntity.ok().body(new ResponseObject("success", "Tạo sản phẩm mới thành công", product));
             }
-
-
-
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo sản phẩm thất bại2", null));
     }
     @PutMapping("/{id}")
     @Transactional
     public ResponseEntity<ResponseObject> updateProduct(@RequestBody ProductCreateDTO product, @PathVariable Integer id){
         String check = productService.updateAndCheckProduct(product,id);
-        if(check=="true"){
+        if(Objects.equals(check, "true")){
             return ResponseEntity.ok().body(new ResponseObject("success", "Cập nhật sản phẩm mới thành công", null));
-        }else if(check=="false01"){
+        }else if(Objects.equals(check, "false01")){
             return ResponseEntity.badRequest().body(new ResponseObject("error", "Đã tồn tại tên sản phẩm: "+product.getName(), null));
-        }else if(check=="false02"){
+        }else if(Objects.equals(check, "false02")){
             return ResponseEntity.badRequest().body(new ResponseObject("error", "Id sản phẩm không đúng hoặc không khớp, ID trên url= "+id+" hoặc Id trong mục sản phẩm= "+product.getId(),null));
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Lỗi nội bộ", null));
@@ -90,8 +84,6 @@ public class ProductController {
         String check = productService.copyProduct(id);
         if(check=="true"){
             return ResponseEntity.ok().body(new ResponseObject("success", "Copy sản phẩm mới thành công", null));
-        }else if(check=="false") {
-            return ResponseEntity.badRequest().body(new ResponseObject("error", "Copy sản phẩm thất bại", null));
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Copy sản phẩm thất bại", null));
     }

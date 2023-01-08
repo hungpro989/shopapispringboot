@@ -14,9 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
+import static com.example.demokoro.common.common.toSlug;
 
 @Service
 @Transactional
@@ -58,6 +60,7 @@ public class ProductService implements IProductService {
     @Override
     public boolean save(Product product) {
         try{
+            product.setSlug(toSlug(product.getName()));
             productRepository.save(product);
             return true;
         }catch (Exception e) {
@@ -103,9 +106,25 @@ public class ProductService implements IProductService {
         ProductDTOAdmin productDTOAdmin = getProducById(id);
         ProductCreateDTO productCreateDTO = new ProductCreateDTO(productDTOAdmin);
         Product p = new Product(productCreateDTO);
+        p.setName(p.getName()+" copy");
         if(save(p)){
-            createProductDetail(productCreateDTO,p);
-            createCategoryProduct(productCreateDTO, p);
+            productDTOAdmin.getProductDetail().forEach(var -> {
+                        ProductDetail productDetail = new ProductDetail(var);
+                        productDetail.setId(null);
+                        productDetail.setCodeName(var.getCodeName()+" copy");
+                        productDetail.setProducts(p);
+                        productDetailService.save(productDetail);
+                    }
+            );
+            productDTOAdmin.getCategoryProduct().forEach(var->{
+                Category category =  categoryRepository.findById(var.getId()).orElse(null);
+                if (category!=null){
+                    CategoryProduct categoryProduct = new CategoryProduct();
+                    categoryProduct.setProduct(p);
+                    categoryProduct.setCategory(category);
+                    categoryProductService.save(categoryProduct);
+                }
+            });
             return "true";
         }
         return "false";

@@ -1,14 +1,21 @@
 package com.example.demokoro.service;
 
+import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
 import com.example.demokoro.models.*;
+import com.example.demokoro.common.common;
 import com.example.demokoro.repository.*;
 import com.example.demokoro.serviceImpl.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import static com.example.demokoro.common.common.generateString;
 
 @Service
 public class OrderService implements IOrderService {
@@ -26,6 +33,10 @@ public class OrderService implements IOrderService {
     private OrderStatusRepository orderStatusRepository;
     @Autowired
     private OrderTypeRepository orderTypeRepository;
+    @Autowired
+    OrderDetailService orderDetailService;
+    @Autowired
+    private ProductDetailRepository productDetailRepository;
 
     @Override
     public List<OrderDTO> getAll() {
@@ -95,11 +106,35 @@ public class OrderService implements IOrderService {
     }
 
     @Override
-    public Order save(Order entity) {
-        try{
-            return  orderRepository.save(entity);
-        }catch (Exception e) {
-            return null;
-        }
+    public boolean save(OrderCreateDTO orderDTO) {
+            //nhận dữ liệu từ DTO và ép vào object Order
+            Order o = new Order(orderDTO);
+            //liên kết các bảng
+            o.setOrderStatus(orderStatusRepository.findById(orderDTO.getStatusId()).orElse(null)); //trạng thái đơn hàng
+            o.setOrderType(orderTypeRepository.findById(orderDTO.getTypeId()).orElse(null));// kiểu đơn
+            o.setBusiness(businessRepository.findById(orderDTO.getBusinessId()).orElse(null)); // business
+            o.setDelivery(deliveryRepository.findById(orderDTO.getDeliveryId()).orElse(null));//đơn vị vận chuyển
+            o.setEmployee(employeeRepository.findById(orderDTO.getEmployeeId()).orElse(null));//đơn của nhân viên A
+            o.setEmployee1(employeeRepository.findById(orderDTO.getCreatorId()).orElse(null));//người tạo đơn của nhân viên A
+            o.setBillCode(generateString(o.getBusiness().getCodeName().trim()));
+            if(o.getOrderTime()==null){
+                o.setOrderTime(new Date());
+            }
+        orderRepository.save(o);
+        orderDTO.getOrderDetailDTO().forEach(var ->{
+            Integer productDetailId = var.getProDeId();
+            ProductDetail productDetail = productDetailRepository.findById(productDetailId).orElse(null);
+            if(productDetail!=null){
+                OrderDetail orderDetail = new OrderDetail(var);
+                orderDetail.setOrders(o);
+                orderDetail.setProductDetail(productDetail);
+                orderDetail.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+                orderDetailService.save(orderDetail);
+            }
+        });
+//        orderDTO.getOrderDetailDTO().forEach(var->{
+//            OrderDetail orderDetail = new OrderDetail(var);
+//        });
+        return  true;
     }
 }

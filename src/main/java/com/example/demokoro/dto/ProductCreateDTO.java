@@ -1,8 +1,5 @@
 package com.example.demokoro.dto;
 
-import com.example.demokoro.models.CategoryProduct;
-import com.example.demokoro.models.Product;
-import com.example.demokoro.models.ProductDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +21,9 @@ public class ProductCreateDTO {
     private List<ProductDetailCreateDTO> productDetail;
     private List<CategoryProductCreateDTO> categoryProduct;
 
+    private List<ProductDetailDTO> productDetail1;
+    private List<CategoryDTOAdmin> categoryProduct1;
+
     public ProductCreateDTO(ProductDTOAdmin productDTOAdmin) {
         this.name = productDTOAdmin.getName();
         this.slug = productDTOAdmin.getSlug();
@@ -32,6 +32,5 @@ public class ProductCreateDTO {
         this.image=productDTOAdmin.getImage();
         this.linkOrder = productDTOAdmin.getLinkOrder();
         this.status=productDTOAdmin.getStatus();
-
     }
 }

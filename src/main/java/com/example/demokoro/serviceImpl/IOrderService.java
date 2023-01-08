@@ -1,5 +1,6 @@
 package com.example.demokoro.serviceImpl;
 
+import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
 import com.example.demokoro.models.Order;
 
@@ -12,5 +13,5 @@ public interface IOrderService {
     List<OrderDTO> getAllByBusinessId(Integer id);
     OrderDTO getById(Integer id);
     boolean deleteById(Integer id);
-    Order save(Order entity);
+    boolean save(OrderCreateDTO order);
 }

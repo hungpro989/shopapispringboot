@@ -34,8 +34,8 @@ public class OrderDTO {
     private String name;
     private String phone;
     private String address;
-    private java.sql.Timestamp orderTime;
-    private java.sql.Timestamp shippingTime;
+    private Date orderTime;
+    private Date shippingTime;
     private Date createdAt;
     private Date updatedAt;
     private OrderStatusDTO orderStatusDTO;
@@ -47,12 +47,6 @@ public class OrderDTO {
     private List<OrderDetailDTO> orderDetail;
     public OrderDTO(Order o) {
         this.id = o.getId();
-        //this.sellerId = o.getSellerId();
-        //this.creatorId = o.getCreatorId();
-//        this.businessId = o.getBusinessId();
-        //this.deliveryId = o.getDeliveryId();
-        //this.statusId = o.getStatusId();
-        //this.typeId = o.getTypeId();
         this.totalMoney = o.getTotalMoney();
         this.productMoney = o.getProductMoney();
         this.shippingPrice = o.getShippingPrice();

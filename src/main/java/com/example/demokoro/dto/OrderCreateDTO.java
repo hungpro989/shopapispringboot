@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -12,11 +13,11 @@ import java.util.Date;
 public class OrderCreateDTO {
     private Integer id;
     private Integer employeeId;
-            private Integer creatorId;
+    private Integer creatorId;
     private Integer businessId;
     private Integer deliveryId;
     private Integer statusId;
-     private Integer typeId;
+    private Integer typeId;
     private double totalMoney;
     private double productMoney;
     private double shippingPrice;
@@ -30,5 +31,7 @@ public class OrderCreateDTO {
     private String name;
     private String phone;
     private String address;
-    private java.sql.Timestamp orderTime;
+    private Date orderTime;
+    private List<OrderDetailDTO> orderDetailDTO;
+
 }
