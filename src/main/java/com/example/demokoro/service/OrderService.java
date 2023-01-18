@@ -22,9 +22,9 @@ public class OrderService implements IOrderService {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
-    EmployeeService employeeService;
+    UserService userService;
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private UserRepository userRepository;
     @Autowired
     private BusinessRepository businessRepository;
     @Autowired
@@ -65,9 +65,9 @@ public class OrderService implements IOrderService {
 //        return listDto;
 //    }
     @Override
-    public List<OrderDTO> getAllByCondition(Integer employeeId, Integer creatorId, Integer businessId, Integer deliveryId, Integer orderStatusId, Integer orderTypeId, String orderTimeStart, String orderTimeEnd) {
+    public List<OrderDTO> getAllByCondition(Integer userId, Integer creatorId, Integer businessId, Integer deliveryId, Integer orderStatusId, Integer orderTypeId, String orderTimeStart, String orderTimeEnd) {
         List<OrderDTO> listDto = new ArrayList<>();
-        List<Order> list = orderRepository.filterOrderByCondition( employeeId, creatorId, businessId ,  deliveryId,  orderStatusId,  orderTypeId,orderTimeStart, orderTimeEnd);
+        List<Order> list = orderRepository.filterOrderByCondition( userId, creatorId, businessId ,  deliveryId,  orderStatusId,  orderTypeId,orderTimeStart, orderTimeEnd);
         for(Order var: list){
             listDto.add((new OrderDTO(var)));
         }
@@ -114,8 +114,8 @@ public class OrderService implements IOrderService {
             o.setOrderType(orderTypeRepository.findById(orderDTO.getTypeId()).orElse(null));// kiểu đơn
             o.setBusiness(businessRepository.findById(orderDTO.getBusinessId()).orElse(null)); // business
             o.setDelivery(deliveryRepository.findById(orderDTO.getDeliveryId()).orElse(null));//đơn vị vận chuyển
-            o.setEmployee(employeeRepository.findById(orderDTO.getEmployeeId()).orElse(null));//đơn của nhân viên A
-            o.setEmployee1(employeeRepository.findById(orderDTO.getCreatorId()).orElse(null));//người tạo đơn của nhân viên A
+            o.setUser(userRepository.findById(orderDTO.getUserId()).orElse(null));//đơn của nhân viên A
+            o.setUser1(userRepository.findById(orderDTO.getCreatorId()).orElse(null));//người tạo đơn của nhân viên A
             o.setBillCode(generateString(o.getBusiness().getCodeName().trim()));
             if(o.getOrderTime()==null){
                 o.setOrderTime(new Date());

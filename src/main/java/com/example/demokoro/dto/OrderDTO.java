@@ -42,8 +42,8 @@ public class OrderDTO {
     private  BusinessDTO businessDTO;
     private  DeliveryDTO deliveryDTO;
     private  OrderTypeDTO orderTypeDTO;
-    private EmployeeOrderDTO employeeOrderDTO;
-    private EmployeeOrderDTO employeeCreatorOrderDTO;
+    private UserOrderDTO userOrderDTO;
+    private UserOrderDTO employeeCreatorOrderDTO;
     private List<OrderDetailDTO> orderDetail;
     public OrderDTO(Order o) {
         this.id = o.getId();
@@ -82,11 +82,11 @@ public class OrderDTO {
         this.orderTypeDTO = new OrderTypeDTO(orderType);
 
         //lấy employee
-        Employee employee = o.getEmployee();
-        this.employeeOrderDTO = new EmployeeOrderDTO(employee);
+        User user = o.getUser();
+        this.userOrderDTO = new UserOrderDTO(user);
         //lay creator
-        Employee creator = o.getEmployee1();
-        this.employeeCreatorOrderDTO = new EmployeeOrderDTO(creator);
+        User creator = o.getUser1();
+        this.employeeCreatorOrderDTO = new UserOrderDTO(creator);
 
         //lay danh sach order detail
         List<OrderDetail> orderDetail = o.getOrderDetail();//lay ra

@@ -1,6 +1,6 @@
 package com.example.demokoro.models;
 
-import com.example.demokoro.dto.EmployeeDTO;
+import com.example.demokoro.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,11 +10,11 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "employee")
+@Table(name = "user")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Employee {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -50,12 +50,12 @@ public class Employee {
     @Column(name = "status")
     private boolean status;
 
-    @OneToMany(mappedBy = "employee")
+    @OneToMany(mappedBy = "user")
     private List<Order> order;
 
 
 
-    public Employee(EmployeeDTO dto){
+    public User(UserDTO dto){
         this.id = dto.getId();
         this.username = dto.getUsername();
         this.password = dto.getPassword();

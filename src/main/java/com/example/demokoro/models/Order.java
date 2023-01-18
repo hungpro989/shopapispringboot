@@ -98,12 +98,12 @@ public class Order {
     private OrderType orderType;
     //seller
     @ManyToOne()
-    @JoinColumn(name = "employee_id", nullable=false)
-    private Employee employee;
+    @JoinColumn(name = "user_id", nullable=false)
+    private User user;
     //creator
     @ManyToOne()
     @JoinColumn(name = "creator_id", nullable=false)
-    private Employee employee1;
+    private User user1;
 
     //order detail
     @OneToMany(mappedBy="orders", cascade = CascadeType.ALL)

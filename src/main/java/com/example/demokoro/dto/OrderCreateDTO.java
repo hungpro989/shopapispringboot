@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderCreateDTO {
     private Integer id;
-    private Integer employeeId;
+    private Integer userId;
     private Integer creatorId;
     private Integer businessId;
     private Integer deliveryId;

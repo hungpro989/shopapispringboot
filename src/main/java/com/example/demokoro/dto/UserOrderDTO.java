@@ -1,6 +1,6 @@
 package com.example.demokoro.dto;
 
-import com.example.demokoro.models.Employee;
+import com.example.demokoro.models.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmployeeOrderDTO {
+public class UserOrderDTO {
     private Integer id;
     private String fullName;
 //    private String address;
@@ -19,7 +19,7 @@ public class EmployeeOrderDTO {
 //    private Date birthday;
 //    private boolean status;
 
-    public EmployeeOrderDTO(Employee b){
+    public UserOrderDTO(User b){
         this.id=b.getId();
         this.fullName=b.getFullName();
 //        this.address=b.getAddress();

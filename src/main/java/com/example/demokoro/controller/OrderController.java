@@ -30,7 +30,7 @@ public class OrderController {
     @Autowired
     private DeliveryRepository deliveryRepository;
     @Autowired
-    private EmployeeRepository employeeRepository;
+    private UserRepository userRepository;
 
     //get all
     @GetMapping
