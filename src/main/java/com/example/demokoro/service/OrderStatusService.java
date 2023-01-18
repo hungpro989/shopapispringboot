@@ -1,13 +1,8 @@
 package com.example.demokoro.service;
 
-import com.example.demokoro.dto.DeliveryDTO;
 import com.example.demokoro.dto.OrderStatusDTO;
-import com.example.demokoro.models.Delivery;
 import com.example.demokoro.models.OrderStatus;
-import com.example.demokoro.repository.BusinessRepository;
-import com.example.demokoro.repository.DeliveryRepository;
 import com.example.demokoro.repository.OrderStatusRepository;
-import com.example.demokoro.serviceImpl.IDeliveryService;
 import com.example.demokoro.serviceImpl.IOrderStatusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,11 +1,7 @@
 package com.example.demokoro.controller;
 
-import com.example.demokoro.dto.EmployeeDTO;
-import com.example.demokoro.dto.OrderStatusDTO;
-import com.example.demokoro.dto.ResponseObject;
+import com.example.demokoro.dto.*;
 import com.example.demokoro.models.Employee;
-import com.example.demokoro.models.OrderStatus;
-import com.example.demokoro.repository.EmployeeRepository;
 import com.example.demokoro.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -78,4 +74,5 @@ public class EmployeeController {
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Không tìm thấy nhân viên nào với ID này", null));
     }
+
 }

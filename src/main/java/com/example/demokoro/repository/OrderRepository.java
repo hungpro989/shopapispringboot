@@ -1,6 +1,7 @@
 package com.example.demokoro.repository;
 
-import com.example.demokoro.models.*;
+import com.example.demokoro.models.Employee;
+import com.example.demokoro.models.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

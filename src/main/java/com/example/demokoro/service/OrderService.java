@@ -2,15 +2,15 @@ package com.example.demokoro.service;
 
 import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
-import com.example.demokoro.models.*;
-import com.example.demokoro.common.common;
+import com.example.demokoro.models.Order;
+import com.example.demokoro.models.OrderDetail;
+import com.example.demokoro.models.ProductDetail;
 import com.example.demokoro.repository.*;
 import com.example.demokoro.serviceImpl.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -120,21 +120,20 @@ public class OrderService implements IOrderService {
             if(o.getOrderTime()==null){
                 o.setOrderTime(new Date());
             }
-        orderRepository.save(o);
-        orderDTO.getOrderDetailDTO().forEach(var ->{
-            Integer productDetailId = var.getProDeId();
-            ProductDetail productDetail = productDetailRepository.findById(productDetailId).orElse(null);
-            if(productDetail!=null){
-                OrderDetail orderDetail = new OrderDetail(var);
-                orderDetail.setOrders(o);
-                orderDetail.setProductDetail(productDetail);
-                orderDetail.setCreatedAt(new Timestamp(System.currentTimeMillis()));
-                orderDetailService.save(orderDetail);
+            if(orderRepository.save(o)!=null){
+                orderDTO.getOrderDetailDTO().forEach(var ->{
+                    Integer productDetailId = var.getProDeId();
+                    ProductDetail productDetail = productDetailRepository.findById(productDetailId).orElse(null);
+                    if(productDetail!=null){
+                        OrderDetail orderDetail = new OrderDetail(var);
+                        orderDetail.setOrders(o);
+                        orderDetail.setProductDetail(productDetail);
+                        orderDetail.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+                        orderDetailService.save(orderDetail);
+                    }
+                });
+                return true;
             }
-        });
-//        orderDTO.getOrderDetailDTO().forEach(var->{
-//            OrderDetail orderDetail = new OrderDetail(var);
-//        });
-        return  true;
+        return  false;
     }
 }

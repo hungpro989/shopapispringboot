@@ -1,6 +1,5 @@
 package com.example.demokoro.repository;
 
-import com.example.demokoro.models.OrderStatus;
 import com.example.demokoro.models.OrderType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

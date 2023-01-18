@@ -1,13 +1,9 @@
 package com.example.demokoro.controller;
 
-import com.example.demokoro.dto.DeliveryDTO;
 import com.example.demokoro.dto.OrderStatusDTO;
 import com.example.demokoro.dto.ResponseObject;
-import com.example.demokoro.models.Delivery;
 import com.example.demokoro.models.OrderStatus;
-import com.example.demokoro.service.DeliveryService;
 import com.example.demokoro.service.OrderStatusService;
-import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

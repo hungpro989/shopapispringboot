@@ -2,8 +2,6 @@ package com.example.demokoro.models;
 
 import com.example.demokoro.dto.ProductDetailCreateDTO;
 import com.example.demokoro.dto.ProductDetailDTO;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

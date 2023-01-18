@@ -1,6 +1,5 @@
 package com.example.demokoro.models;
 
-import com.example.demokoro.dto.OrderStatusDTO;
 import com.example.demokoro.dto.OrderTypeDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;

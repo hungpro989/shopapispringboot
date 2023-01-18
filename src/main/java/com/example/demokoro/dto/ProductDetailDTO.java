@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,8 +20,6 @@ public class ProductDetailDTO {
     private Float discount;
     private String image;
     private Integer status;
-    private Date createdAt;
-    private Date updatedAt;
 
     public ProductDetailDTO(ProductDetail pd){
         this.id = pd.getId();
@@ -37,7 +33,5 @@ public class ProductDetailDTO {
         this.image = pd.getImage();
         this.holdQuantity = pd.getHoldQuantity();
         this.status = pd.getStatus();
-        this.createdAt = pd.getCreatedAt();
-        this.updatedAt = pd.getUpdatedAt();
     }
 }

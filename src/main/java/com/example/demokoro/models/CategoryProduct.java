@@ -3,7 +3,6 @@ package com.example.demokoro.models;
 import lombok.*;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
 
 @Entity
 @Table(name = "category_product")

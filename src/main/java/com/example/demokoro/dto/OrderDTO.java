@@ -1,5 +1,6 @@
 package com.example.demokoro.dto;
 
+import com.example.demokoro.helper.models.*;
 import com.example.demokoro.models.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

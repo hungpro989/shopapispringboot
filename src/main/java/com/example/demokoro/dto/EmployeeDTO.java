@@ -1,12 +1,10 @@
 package com.example.demokoro.dto;
 
-import com.example.demokoro.models.Business;
 import com.example.demokoro.models.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.util.Date;
 
 @Data
@@ -14,6 +12,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class EmployeeDTO {
     private Integer id;
+    private String username;
+    private String password;
     private String fullName;
     private String address;
     private String phone;
@@ -25,6 +25,8 @@ public class EmployeeDTO {
 
     public EmployeeDTO(Employee b){
         this.id=b.getId();
+        this.username = b.getUsername();
+        this.password = b.getPassword();
         this.fullName=b.getFullName();
         this.address=b.getAddress();
         this.phone=b.getPhone();

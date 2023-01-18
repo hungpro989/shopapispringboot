@@ -1,6 +1,5 @@
 package com.example.demokoro.dto;
 
-import com.example.demokoro.models.Employee;
 import com.example.demokoro.models.OrderDetail;
 import com.example.demokoro.models.ProductDetail;
 import lombok.AllArgsConstructor;

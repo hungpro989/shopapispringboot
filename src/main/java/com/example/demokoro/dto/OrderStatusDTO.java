@@ -1,13 +1,9 @@
 package com.example.demokoro.dto;
 
-import com.example.demokoro.models.Order;
 import com.example.demokoro.models.OrderStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @NoArgsConstructor

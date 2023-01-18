@@ -3,7 +3,6 @@ package com.example.demokoro.controller;
 import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
 import com.example.demokoro.dto.ResponseObject;
-import com.example.demokoro.models.*;
 import com.example.demokoro.repository.*;
 import com.example.demokoro.service.OrderDetailService;
 import com.example.demokoro.service.OrderService;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/v1/orders")
 public class OrderController {
@@ -94,6 +93,16 @@ public class OrderController {
         if(orderService.save(orderDTO)){
             return ResponseEntity.ok().body(new ResponseObject("success", "Tạo đơn hàng thành công", null));
         }
-        return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo sản phẩm thất bại", null));
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo đơn hàng thất bại", null));
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseObject> updateOrder(@RequestBody OrderCreateDTO orderDTO, @PathVariable Integer id){
+        if(orderService.getById(id)==null){
+            return ResponseEntity.badRequest().body(new ResponseObject("error", "Không tìm thấy Id đơn hàng tương ứng", null));
+        }
+        if(orderService.save(orderDTO)){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Cập nhật đơn hàng thành công", null));
+        }
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Cập nhật đơn hàng thất bại", null));
     }
 }

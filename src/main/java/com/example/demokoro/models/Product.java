@@ -1,7 +1,6 @@
 package com.example.demokoro.models;
 
 import com.example.demokoro.dto.ProductCreateDTO;
-import com.example.demokoro.dto.ProductDTOAdmin;
 import lombok.*;
 
 import javax.persistence.*;
