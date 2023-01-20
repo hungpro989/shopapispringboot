@@ -5,6 +5,7 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "customer")
@@ -54,6 +55,8 @@ public class Customer {
     @Column(name = "weight")
     private float weight;
 
+    @OneToMany(mappedBy = "customer")
+    private List<Order> order;
     public Customer(CustomerCreateDTO c) {
         this.id=c.getId();
         this.username=c.getUsername();

@@ -21,16 +21,6 @@ public class OrderController {
     OrderService orderService;
     @Autowired
     OrderDetailService orderDetailService;
-    @Autowired
-    private OrderStatusRepository orderStatusRepository;
-    @Autowired
-    private OrderTypeRepository orderTypeRepository;
-    @Autowired
-    private BusinessRepository businessRepository;
-    @Autowired
-    private DeliveryRepository deliveryRepository;
-    @Autowired
-    private UserRepository userRepository;
 
     //get all
     @GetMapping
@@ -104,5 +94,21 @@ public class OrderController {
             return ResponseEntity.ok().body(new ResponseObject("success", "Cập nhật đơn hàng thành công", null));
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Cập nhật đơn hàng thất bại", null));
+    }
+    @PostMapping("/{id}")
+    public ResponseEntity<ResponseObject> updateOrderStatus(@PathVariable Integer id, @PathVariable Integer statusId){
+
+        if(orderService.updateStatus(id, statusId)){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Cập nhật trạng thái đơn hàng thành công", null));
+        }
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Cập nhật trạng thái đơn hàng thất bại", null));
+    }
+    @GetMapping("/status/{statusId}")
+    public ResponseEntity<ResponseObject> getAll(@PathVariable Integer statusId){
+        List<OrderDTO> listDto = orderService.getOrderByStatus(statusId);
+        if(!listDto.isEmpty()){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Lấy danh sách đơn hàng thành công", listDto));
+        }
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Lấy danh sách đơn hàng thất bại", listDto));
     }
 }

@@ -13,4 +13,6 @@ public interface IOrderService {
     OrderDTO getById(Integer id);
     boolean deleteById(Integer id);
     boolean save(OrderCreateDTO order);
+    boolean updateStatus(Integer id, Integer statusId);
+    List<OrderDTO> getOrderByStatus(Integer id);
 }

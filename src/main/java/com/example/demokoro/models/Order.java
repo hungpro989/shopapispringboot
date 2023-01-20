@@ -43,8 +43,8 @@ public class Order {
     @Column(name = "payment_amount")
     private Double paymentAmount;
 
-    @Column(name = "customer_id")
-    private Integer customerId;
+//    @Column(name = "customer_id")
+//    private Integer customerId;
 
     @Column(name = "bill_code", unique = true, nullable = false)
     private String billCode;
@@ -108,6 +108,12 @@ public class Order {
     //order detail
     @OneToMany(mappedBy="orders", cascade = CascadeType.ALL)
     private List<OrderDetail> orderDetail;
+
+    //customer
+    @ManyToOne()
+    @JoinColumn(name = "customer_id", nullable=false)
+    private Customer customer;
+
     public Order(OrderDTO dto) {
         this.id = dto.getId();
         this.totalMoney = dto.getTotalMoney();
@@ -116,7 +122,7 @@ public class Order {
         this.discount = dto.getDiscount();
         this.paid = dto.getPaid();
         this.paymentAmount = dto.getPaymentAmount();
-        this.customerId = dto.getCustomerId();
+        //this.customerId = dto.getCustomerId();
         this.billCode = dto.getBillCode();
         this.internalNotes = dto.getInternalNotes();
         this.shippingNotes = dto.getShippingNotes();
@@ -138,7 +144,7 @@ public class Order {
         this.discount = orderCreateDTO.getDiscount();
         this.paid = orderCreateDTO.getPaid();
         this.paymentAmount = orderCreateDTO.getPaymentAmount();
-        this.customerId = orderCreateDTO.getCustomerId();
+        //this.customerId = orderCreateDTO.getCustomerId();
         this.billCode = orderCreateDTO.getBillCode();
         this.internalNotes = orderCreateDTO.getInternalNotes();
         this.shippingNotes = orderCreateDTO.getShippingNotes();

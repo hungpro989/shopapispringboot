@@ -44,6 +44,7 @@ public class OrderDTO {
     private  OrderTypeDTO orderTypeDTO;
     private UserOrderDTO userOrderDTO;
     private UserOrderDTO employeeCreatorOrderDTO;
+    private CustomerViewDTO customerViewDTO;
     private List<OrderDetailDTO> orderDetail;
     public OrderDTO(Order o) {
         this.id = o.getId();
@@ -53,7 +54,7 @@ public class OrderDTO {
         this.discount = o.getDiscount();
         this.paid = o.getPaid();
         this.paymentAmount = o.getPaymentAmount();
-        this.customerId = o.getCustomerId();
+        //this.customerId = o.getCustomerId();
         this.billCode = o.getBillCode();
         this.internalNotes = o.getInternalNotes();
         this.shippingNotes = o.getShippingNotes();
@@ -87,6 +88,10 @@ public class OrderDTO {
         //lay creator
         User creator = o.getUser1();
         this.employeeCreatorOrderDTO = new UserOrderDTO(creator);
+
+        //lay customer
+        Customer customer = o.getCustomer();
+        this.customerViewDTO = new CustomerViewDTO(customer);
 
         //lay danh sach order detail
         List<OrderDetail> orderDetail = o.getOrderDetail();//lay ra

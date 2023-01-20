@@ -2,6 +2,7 @@ package com.example.demokoro.service;
 
 import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
+import com.example.demokoro.models.Customer;
 import com.example.demokoro.models.Order;
 import com.example.demokoro.models.OrderDetail;
 import com.example.demokoro.models.ProductDetail;
@@ -38,6 +39,8 @@ public class OrderService implements IOrderService {
     @Autowired
     private ProductDetailRepository productDetailRepository;
 
+    @Autowired
+    CustomerRepository customerRepository;
     @Override
     public List<OrderDTO> getAll() {
         List<OrderDTO> listDto = new ArrayList<>();
@@ -107,8 +110,18 @@ public class OrderService implements IOrderService {
 
     @Override
     public boolean save(OrderCreateDTO orderDTO) {
-            //nhận dữ liệu từ DTO và ép vào object Order
-            Order o = new Order(orderDTO);
+        //nhận dữ liệu từ DTO và ép vào object Order
+        Order o = new Order(orderDTO);
+        Customer customer = new Customer();
+        Customer cus = customerRepository.findCustomerByPhone(orderDTO.getPhone());
+            if(cus==null){
+                customer.setFullName(orderDTO.getName());
+                customer.setPhone(orderDTO.getPhone());
+                customer.setAddress(orderDTO.getAddress());
+                customerRepository.save(customer);
+            }else{
+                customer = customerRepository.findCustomerByPhone(orderDTO.getPhone());
+            }
             //liên kết các bảng
             o.setOrderStatus(orderStatusRepository.findById(orderDTO.getStatusId()).orElse(null)); //trạng thái đơn hàng
             o.setOrderType(orderTypeRepository.findById(orderDTO.getTypeId()).orElse(null));// kiểu đơn
@@ -119,6 +132,7 @@ public class OrderService implements IOrderService {
             o.setBillCode(generateString(o.getBusiness().getCodeName().trim()));
             if(o.getOrderTime()==null){
                 o.setOrderTime(new Date());
+                o.setCustomer(customer);
             }
             if(orderRepository.save(o)!=null){
                 orderDTO.getOrderDetailDTO().forEach(var ->{
@@ -135,5 +149,26 @@ public class OrderService implements IOrderService {
                 return true;
             }
         return  false;
+    }
+
+    @Override
+    public boolean updateStatus(Integer id, Integer statusId) {
+        Order o = orderRepository.findById(id).orElse(null);
+        if (o != null){
+            o.setOrderStatus(orderStatusRepository.findById(statusId).orElse(null));
+            orderRepository.save(o);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<OrderDTO> getOrderByStatus(Integer id) {
+        List<OrderDTO> listDto = new ArrayList<>();
+        List<Order> list = orderRepository.findOrderByOrderStatusId(id);
+        for(Order var: list){
+            listDto.add((new OrderDTO(var)));
+        }
+        return listDto;
     }
 }
