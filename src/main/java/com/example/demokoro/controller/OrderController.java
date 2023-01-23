@@ -2,8 +2,8 @@ package com.example.demokoro.controller;
 
 import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
+import com.example.demokoro.dto.OrderPrintMultipleDTO;
 import com.example.demokoro.dto.ResponseObject;
-import com.example.demokoro.repository.*;
 import com.example.demokoro.service.OrderDetailService;
 import com.example.demokoro.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,7 +95,7 @@ public class OrderController {
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Cập nhật đơn hàng thất bại", null));
     }
-    @PostMapping("/{id}")
+    @PostMapping("/{id}/{statusId}")
     public ResponseEntity<ResponseObject> updateOrderStatus(@PathVariable Integer id, @PathVariable Integer statusId){
 
         if(orderService.updateStatus(id, statusId)){
@@ -110,5 +110,17 @@ public class OrderController {
             return ResponseEntity.ok().body(new ResponseObject("success", "Lấy danh sách đơn hàng thành công", listDto));
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Lấy danh sách đơn hàng thất bại", listDto));
+    }
+    @PostMapping("/printbill/{id}/{deliveryId}")
+    public ResponseEntity<ResponseObject> printBill(@PathVariable Integer id, @PathVariable Integer deliveryId){
+
+        if(orderService.printBill(id, deliveryId)!=null){
+            return ResponseEntity.ok().body(new ResponseObject("success", "In đơn hàng thành công", orderService.printBill(id, deliveryId)));
+        }
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "In đơn hàng thất bại", null));
+    }
+    @PostMapping("/printMultipleBill")
+    public ResponseEntity<ResponseObject> printMultipleBill(@RequestBody OrderPrintMultipleDTO list){
+        return ResponseEntity.ok().body(new ResponseObject("test", "Testtttt...", orderService.printMultipleBill(list)));
     }
 }

@@ -1,11 +1,15 @@
 package com.example.demokoro.dto;
 
 import com.example.demokoro.models.Customer;
+import com.example.demokoro.models.CustomerAddress;
+import com.example.demokoro.models.OrderDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -37,6 +41,8 @@ public class CustomerViewDTO {
 
     private float weight;
 
+    private List<CustomerAddressDTO> customerAddressDTO;
+
     public CustomerViewDTO(Customer c) {
         this.id=c.getId();
         this.username=c.getUsername();
@@ -51,5 +57,14 @@ public class CustomerViewDTO {
         this.weight=c.getWeight();
         this.birthday=c.getBirthday();
         this.status= c.getStatus();
+        //lấy customer address
+        //lay danh sach order detail
+        List<CustomerAddress> customerAddresses = c.getCustomerAddresses();//lay ra
+        List<CustomerAddressDTO> customerAddressDTO = new ArrayList<>();//tao mang moi
+        customerAddresses.forEach(p-> {
+            customerAddressDTO.add(new CustomerAddressDTO(p));
+        });
+        this.customerAddressDTO = customerAddressDTO;
+
     }
 }

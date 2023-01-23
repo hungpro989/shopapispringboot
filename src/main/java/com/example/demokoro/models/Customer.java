@@ -57,6 +57,10 @@ public class Customer {
 
     @OneToMany(mappedBy = "customer")
     private List<Order> order;
+
+    @OneToMany(mappedBy = "customer")
+    private List<CustomerAddress> customerAddresses;
+
     public Customer(CustomerCreateDTO c) {
         this.id=c.getId();
         this.username=c.getUsername();

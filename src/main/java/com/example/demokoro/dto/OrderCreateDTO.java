@@ -33,5 +33,7 @@ public class OrderCreateDTO {
     private String address;
     private Date orderTime;
     private List<OrderDetailDTO> orderDetailDTO;
-
+    private String province;
+    private String district;
+    private String wards;
 }

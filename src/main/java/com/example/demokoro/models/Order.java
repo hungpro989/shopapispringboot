@@ -43,9 +43,6 @@ public class Order {
     @Column(name = "payment_amount")
     private Double paymentAmount;
 
-//    @Column(name = "customer_id")
-//    private Integer customerId;
-
     @Column(name = "bill_code", unique = true, nullable = false)
     private String billCode;
 
@@ -63,6 +60,12 @@ public class Order {
 
     @Column(name = "address")
     private String address;
+    @Column(name = "province")
+    private String province;
+    @Column(name = "district")
+    private String district;
+    @Column(name = "wards")
+    private String wards;
     @CreationTimestamp
     @Column(name = "order_time", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -131,9 +134,11 @@ public class Order {
         this.address = dto.getAddress();
         this.orderTime = dto.getOrderTime();
         this.shippingTime = dto.getShippingTime();
+        this.province = dto.getProvince();
+        this.district = dto.getDistrict();
+        this.wards = dto.getWards();
         this.createdAt = dto.getCreatedAt();
         this.updatedAt = dto.getUpdatedAt();
-
     }
 
     public Order(OrderCreateDTO orderCreateDTO) {
@@ -144,7 +149,6 @@ public class Order {
         this.discount = orderCreateDTO.getDiscount();
         this.paid = orderCreateDTO.getPaid();
         this.paymentAmount = orderCreateDTO.getPaymentAmount();
-        //this.customerId = orderCreateDTO.getCustomerId();
         this.billCode = orderCreateDTO.getBillCode();
         this.internalNotes = orderCreateDTO.getInternalNotes();
         this.shippingNotes = orderCreateDTO.getShippingNotes();
@@ -152,6 +156,9 @@ public class Order {
         this.phone = orderCreateDTO.getPhone();
         this.address = orderCreateDTO.getAddress();
         this.orderTime = orderCreateDTO.getOrderTime();
+        this.province = orderCreateDTO.getProvince();
+        this.district = orderCreateDTO.getDistrict();
+        this.wards = orderCreateDTO.getWards();
     }
 
 }

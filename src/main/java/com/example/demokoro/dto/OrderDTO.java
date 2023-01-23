@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,20 +15,12 @@ import java.util.List;
 @AllArgsConstructor
 public class OrderDTO {
     private Integer id;
-
-    //private Integer sellerId;
-    private Integer creatorId;
-    //private Integer businessId;
-    //private Integer deliveryId;
-    //private Integer statusId;
-   // private Integer typeId;
     private double totalMoney;
     private double productMoney;
     private double shippingPrice;
     private double discount;
     private double paid;
     private double paymentAmount;
-    private Integer customerId;
     private String billCode;
     private String internalNotes;
     private String shippingNotes;
@@ -36,6 +29,9 @@ public class OrderDTO {
     private String address;
     private Date orderTime;
     private Date shippingTime;
+    private String province;
+    private String district;
+    private String wards;
     private Date createdAt;
     private Date updatedAt;
     private OrderStatusDTO orderStatusDTO;
@@ -54,7 +50,6 @@ public class OrderDTO {
         this.discount = o.getDiscount();
         this.paid = o.getPaid();
         this.paymentAmount = o.getPaymentAmount();
-        //this.customerId = o.getCustomerId();
         this.billCode = o.getBillCode();
         this.internalNotes = o.getInternalNotes();
         this.shippingNotes = o.getShippingNotes();
@@ -63,6 +58,9 @@ public class OrderDTO {
         this.address = o.getAddress();
         this.orderTime = o.getOrderTime();
         this.shippingTime = o.getShippingTime();
+        this.province = o.getProvince();
+        this.district = o.getDistrict();
+        this.wards = o.getWards();
         this.createdAt = o.getCreatedAt();
         this.updatedAt = o.getUpdatedAt();
 

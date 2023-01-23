@@ -2,6 +2,7 @@ package com.example.demokoro.serviceImpl;
 
 import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
+import com.example.demokoro.dto.OrderPrintMultipleDTO;
 
 import java.util.List;
 
@@ -14,5 +15,8 @@ public interface IOrderService {
     boolean deleteById(Integer id);
     boolean save(OrderCreateDTO order);
     boolean updateStatus(Integer id, Integer statusId);
+    boolean updateDelivery(Integer id, Integer deliveryId);
     List<OrderDTO> getOrderByStatus(Integer id);
+    OrderDTO printBill(Integer id, Integer deliveryId);
+    List<OrderDTO> printMultipleBill(OrderPrintMultipleDTO orderPrintMultipleDTO);
 }

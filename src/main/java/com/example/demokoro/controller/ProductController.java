@@ -23,14 +23,6 @@ public class ProductController {
     ProductService productService;
     @Autowired
     ProductDetailService productDetailService;
-    @Autowired
-    private CategoryProductService categoryProductService;
-    @Autowired
-    private CategoryService categoryService;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private ProductRepository productRepository;
 
     @GetMapping
     public ResponseEntity<ResponseObject> getAllProduct(){
