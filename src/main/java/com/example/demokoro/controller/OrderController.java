@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
-@CrossOrigin(origins = "http://localhost:3000/")
 @RestController
 @RequestMapping("/api/v1/orders")
+@CrossOrigin
 public class OrderController {
     @Autowired
     OrderService orderService;
@@ -79,9 +79,9 @@ public class OrderController {
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Lấy danh sách đơn hàng thất bại", null));
     }
     @PostMapping
-    public ResponseEntity<ResponseObject> createOrder(@RequestBody OrderCreateDTO orderDTO){
-        if(orderService.save(orderDTO)){
-            return ResponseEntity.ok().body(new ResponseObject("success", "Tạo đơn hàng thành công", null));
+    public ResponseEntity<ResponseObject> createOrder(@RequestBody OrderCreateDTO orderCreateDTO){
+        if(orderService.save(orderCreateDTO)){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Tạo đơn hàng thành công", orderCreateDTO));
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Tạo đơn hàng thất bại", null));
     }

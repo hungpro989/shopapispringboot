@@ -117,6 +117,10 @@ public class Order {
     @JoinColumn(name = "customer_id", nullable=false)
     private Customer customer;
 
+    //tag
+    @OneToMany(mappedBy="order", cascade = CascadeType.ALL)
+    private List<OrderTag> orderTag;
+
     public Order(OrderDTO dto) {
         this.id = dto.getId();
         this.totalMoney = dto.getTotalMoney();
@@ -125,7 +129,6 @@ public class Order {
         this.discount = dto.getDiscount();
         this.paid = dto.getPaid();
         this.paymentAmount = dto.getPaymentAmount();
-        //this.customerId = dto.getCustomerId();
         this.billCode = dto.getBillCode();
         this.internalNotes = dto.getInternalNotes();
         this.shippingNotes = dto.getShippingNotes();
@@ -142,7 +145,7 @@ public class Order {
     }
 
     public Order(OrderCreateDTO orderCreateDTO) {
-        this.id = orderCreateDTO.getId();
+//        this.id = orderCreateDTO.getId();
         this.totalMoney = orderCreateDTO.getTotalMoney();
         this.productMoney = orderCreateDTO.getProductMoney();
         this.shippingPrice = orderCreateDTO.getShippingPrice();

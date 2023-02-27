@@ -2,7 +2,6 @@ package com.example.demokoro.dto;
 
 import com.example.demokoro.models.Customer;
 import com.example.demokoro.models.CustomerAddress;
-import com.example.demokoro.models.OrderDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

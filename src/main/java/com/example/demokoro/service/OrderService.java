@@ -3,21 +3,19 @@ package com.example.demokoro.service;
 import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
 import com.example.demokoro.dto.OrderPrintMultipleDTO;
-import com.example.demokoro.models.Customer;
-import com.example.demokoro.models.Order;
-import com.example.demokoro.models.OrderDetail;
-import com.example.demokoro.models.ProductDetail;
+import com.example.demokoro.dto.ProductCreateDTO;
+import com.example.demokoro.models.*;
 import com.example.demokoro.repository.*;
 import com.example.demokoro.serviceImpl.IOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static com.example.demokoro.common.common.generateString;
 
@@ -26,7 +24,7 @@ public class OrderService implements IOrderService {
     @Autowired
     OrderRepository orderRepository;
     @Autowired
-    UserService userService;
+    OrderTagService orderTagService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -44,6 +42,8 @@ public class OrderService implements IOrderService {
 
     @Autowired
     CustomerRepository customerRepository;
+    @Autowired
+    private TagRepository tagRepository;
 
     @Override
     public List<OrderDTO> getAll() {
@@ -125,11 +125,11 @@ public class OrderService implements IOrderService {
         } else {
             customer = customerRepository.findCustomerByPhone(orderDTO.getPhone());
         }
-        //liên kết các bảng
+        //liên kết các bảng 1-n
         o.setOrderStatus(orderStatusRepository.findById(orderDTO.getStatusId()).orElse(null)); //trạng thái đơn hàng
         o.setOrderType(orderTypeRepository.findById(orderDTO.getTypeId()).orElse(null));// kiểu đơn
         o.setBusiness(businessRepository.findById(orderDTO.getBusinessId()).orElse(null)); // business
-        //o.setDelivery(deliveryRepository.findById(orderDTO.getDeliveryId()).orElse(null));//đơn vị vận chuyển
+        o.setDelivery(deliveryRepository.findById(orderDTO.getDeliveryId()).orElse(null));//đơn vị vận chuyển
         o.setUser(userRepository.findById(orderDTO.getUserId()).orElse(null));//đơn của nhân viên A
         o.setUser1(userRepository.findById(orderDTO.getCreatorId()).orElse(null));//người tạo đơn của nhân viên A
         o.setBillCode(generateString(o.getBusiness().getCodeName().trim()));
@@ -138,6 +138,7 @@ public class OrderService implements IOrderService {
             o.setCustomer(customer);
         }
         orderRepository.save(o);
+        createOrderTag(orderDTO, o);
         orderDTO.getOrderDetailDTO().forEach(var -> {
             Integer productDetailId = var.getProDeId();
             ProductDetail productDetail = productDetailRepository.findById(productDetailId).orElse(null);
@@ -151,7 +152,20 @@ public class OrderService implements IOrderService {
         });
         return true;
     }
-
+    public void createOrderTag(@RequestBody OrderCreateDTO orderCreateDTO, Order p) {
+        if(orderCreateDTO.getOrderTag()!= null){
+            orderCreateDTO.getOrderTag().forEach(var -> {
+                Tag tag = new Tag();
+                tag = tagRepository.findById(var.getTagId()).orElse(null);
+                if (tag!=null){
+                    OrderTag orderTag = new OrderTag();
+                    orderTag.setOrder(p);
+                    orderTag.setTag(tag);
+                    orderTagService.save(orderTag);
+                }
+            });
+        }
+    }
     @Override
     public boolean updateStatus(Integer id, Integer statusId) {
         Order o = orderRepository.findById(id).orElse(null);

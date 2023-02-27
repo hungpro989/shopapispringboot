@@ -22,5 +22,6 @@ public class CustomerAddressDTO {
         this.phone=p.getPhone();
         this.name=p.getName();
         this.status=p.getStatus();
+        this.customerId=p.getCustomer().getId();
     }
 }

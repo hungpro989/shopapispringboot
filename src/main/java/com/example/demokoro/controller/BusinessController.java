@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/business")
+@CrossOrigin
 public class BusinessController {
     @Autowired
     BusinessService businessService;

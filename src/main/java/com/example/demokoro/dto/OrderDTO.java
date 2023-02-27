@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +41,7 @@ public class OrderDTO {
     private UserOrderDTO employeeCreatorOrderDTO;
     private CustomerViewDTO customerViewDTO;
     private List<OrderDetailDTO> orderDetail;
+    private List<OrderTagDTO> orderTag;
     public OrderDTO(Order o) {
         this.id = o.getId();
         this.totalMoney = o.getTotalMoney();
@@ -98,6 +98,14 @@ public class OrderDTO {
             orderDetailDTO.add(new OrderDetailDTO(p));
         });
         this.orderDetail = orderDetailDTO;
+
+        //lấy danh sách order tag
+        List<OrderTag> orderTag = o.getOrderTag();
+        List<OrderTagDTO> orderTagDTO = new ArrayList<>();
+        orderTag.forEach(p->{
+            orderTagDTO.add(new OrderTagDTO(p));
+        });
+        this.orderTag = orderTagDTO;
     }
 
 

@@ -39,7 +39,7 @@ public class Product {
     private String slug;
 
     @Column(name = "status")
-    private Byte status;
+    private Boolean status;
 
     @Column(name = "updated_at")
     private java.sql.Timestamp updatedAt;

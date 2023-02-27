@@ -19,7 +19,8 @@ public class ProductDetailDTO {
     private Float price;
     private Float discount;
     private String image;
-    private Integer status;
+    private Boolean status;
+    private Float cost;
 
     public ProductDetailDTO(ProductDetail pd){
         this.id = pd.getId();
@@ -33,5 +34,6 @@ public class ProductDetailDTO {
         this.image = pd.getImage();
         this.holdQuantity = pd.getHoldQuantity();
         this.status = pd.getStatus();
+        this.cost=pd.getCost();
     }
 }

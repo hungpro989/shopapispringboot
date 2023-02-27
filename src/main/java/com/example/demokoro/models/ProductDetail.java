@@ -39,6 +39,9 @@ public class ProductDetail {
     @Column(name = "hold_quantity")
     private Integer holdQuantity;
 
+    @Column(name = "cost")
+    private Float cost;
+
     @Column(name = "price")
     private Float price;
 
@@ -49,7 +52,7 @@ public class ProductDetail {
     private String image;
 
     @Column(name = "status")
-    private Integer status;
+    private Boolean status;
 
     @Column(name = "created_at")
     private Date createdAt;
@@ -78,6 +81,7 @@ public class ProductDetail {
         this.discount = dto.getDiscount();
         this.image = dto.getImage();
         this.status = dto.getStatus();
+        this.cost = dto.getCost();
     }
 
     public ProductDetail(ProductDetailDTO var) {
@@ -92,5 +96,22 @@ public class ProductDetail {
         this.discount = var.getDiscount();
         this.image = var.getImage();
         this.status = var.getStatus();
+        this.cost=var.getCost();
+    }
+
+    public ProductDetail(ProductDetail pd) {
+        this.id = pd.getId();
+        this.codeName = pd.getCodeName();
+        this.description = pd.getDescription();
+        this.descShort = pd.getDescShort();
+        this.totalQuantity = pd.getTotalQuantity();
+        this.validQuantity = pd.getValidQuantity();
+        this.holdQuantity = pd.getHoldQuantity();
+        this.cost = pd.getCost();
+        this.price = pd.getPrice();
+        this.discount = pd.getDiscount();
+        this.image = pd.getImage();
+        this.status = pd.getStatus();
+        this.products = pd.getProducts();
     }
 }

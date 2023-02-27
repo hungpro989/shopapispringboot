@@ -17,13 +17,9 @@ public class ProductCreateDTO {
     private String contentShort;
     private String image;
     private String linkOrder;
-    private Byte status;
+    private Boolean status;
     private List<ProductDetailCreateDTO> productDetail;
     private List<CategoryProductCreateDTO> categoryProduct;
-
-    private List<ProductDetailDTO> productDetail1;
-    private List<CategoryDTOAdmin> categoryProduct1;
-
     public ProductCreateDTO(ProductDTOAdmin productDTOAdmin) {
         this.name = productDTOAdmin.getName();
         this.slug = productDTOAdmin.getSlug();

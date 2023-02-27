@@ -11,7 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderCreateDTO {
-    private Integer id;
+//    private Integer id;
     private Integer userId;
     private Integer creatorId;
     private Integer businessId;
@@ -32,8 +32,9 @@ public class OrderCreateDTO {
     private String phone;
     private String address;
     private Date orderTime;
-    private List<OrderDetailDTO> orderDetailDTO;
     private String province;
     private String district;
     private String wards;
+    private List<OrderDetailDTO> orderDetailDTO;
+    private List<OrderTagCreateDTO> orderTag;
 }

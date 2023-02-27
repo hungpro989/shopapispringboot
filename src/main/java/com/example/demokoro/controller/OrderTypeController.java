@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/ordertype")
+@CrossOrigin
 public class OrderTypeController {
     @Autowired
     OrderTypeService orderTypeService;

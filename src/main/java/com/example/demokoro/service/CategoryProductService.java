@@ -16,7 +16,6 @@ public class CategoryProductService implements ICategoryProductService {
     public void save(CategoryProduct cp) {
         categoryProductRepository.save(cp);
     }
-
     @Override
     public void deleteById(Integer id) {
         categoryProductRepository.deleteCategoryProductByProductId(id);

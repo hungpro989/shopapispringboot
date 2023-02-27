@@ -22,7 +22,7 @@ public class ProductDTOAdmin {
     private String linkOrder;
     private String name;
     private String slug;
-    private Byte status;
+    private Boolean status;
     private java.sql.Timestamp updatedAt;
     private List<CategoryDTOAdmin> categoryProduct;
     private List<ProductDetailDTO> productDetail;
@@ -63,4 +63,6 @@ public class ProductDTOAdmin {
             this.productDetail = productDetailDTO;
         }
     }
+
+
 }

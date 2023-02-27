@@ -130,14 +130,16 @@ public class ProductService implements IProductService {
     }
 
     private String createProduct(ProductCreateDTO productCreateDTO, Integer id, Product p) {
+        System.out.println(productCreateDTO.getCategoryProduct());
         if(!categoryProductService.findCategoryProductByProductId(id).isEmpty()){
-            categoryProductService.deleteById(p.getId());
+            if(!productCreateDTO.getCategoryProduct().isEmpty()){
+                categoryProductService.deleteById(p.getId());
+            }
         }
         if(save(p)){
             createProductDetail(productCreateDTO,p);
             createCategoryProduct(productCreateDTO, p);
         }
-
         return "true";
     }
 

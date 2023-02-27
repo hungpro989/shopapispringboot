@@ -2,10 +2,6 @@ package com.example.demokoro.controller;
 
 import com.example.demokoro.dto.*;
 import com.example.demokoro.models.Product;
-import com.example.demokoro.repository.CategoryRepository;
-import com.example.demokoro.repository.ProductRepository;
-import com.example.demokoro.service.CategoryProductService;
-import com.example.demokoro.service.CategoryService;
 import com.example.demokoro.service.ProductDetailService;
 import com.example.demokoro.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +11,9 @@ import org.springframework.web.bind.annotation.*;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Objects;
-
-@RequestMapping("/api/v1/products")
 @RestController
+@CrossOrigin()
+@RequestMapping("/api/v1/products")
 public class ProductController {
     @Autowired
     ProductService productService;
@@ -70,13 +66,35 @@ public class ProductController {
     public void deleteProduct(@PathVariable("id") Integer id) {
         productService.deleteById(id);
     }
-    //copy product mới
-    @PostMapping("/{id}")
+
+    //copy product new
+
+    @PostMapping("/copy-product/{id}")
     public ResponseEntity<ResponseObject> copyProduct(@PathVariable Integer id){
         String check = productService.copyProduct(id);
         if(check=="true"){
             return ResponseEntity.ok().body(new ResponseObject("success", "Copy sản phẩm mới thành công", null));
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Copy sản phẩm thất bại", null));
+    }
+
+    //copy product detail new
+    @PostMapping("/copy-product-detail/{id}")
+    public ResponseEntity<ResponseObject> copyProductDetail(@PathVariable Integer id){
+        String check = productDetailService.copyProductDetail(id);
+        if(check=="true"){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Copy sản phẩm con mới thành công", null));
+        }
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Copy sản phẩm con thất bại", null));
+    }
+
+    //get list product detail
+    @GetMapping("/product-detail")
+    public ResponseEntity<ResponseObject> getAllProductDetail(){
+        List<ProductDetailDTO> listDto = productDetailService.getAllProductDetail();
+        if(!listDto.isEmpty()){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Lay danh sach san pham con thanh cong", listDto));
+        }
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Lay danh sach san pham con that bai", null));
     }
 }
