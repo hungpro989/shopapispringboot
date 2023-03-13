@@ -5,8 +5,11 @@ import com.example.demokoro.dto.OrderDetailDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(name = "order_detail")
@@ -22,14 +25,23 @@ public class OrderDetail {
     @Column(name = "price")
     private Float price;
 
+    @Column(name = "discount")
+    private Float discount;
+
     @Column(name = "quantity")
     private Integer quantity;
-
+//    @CreationTimestamp
+//    @Column(name = "created_at", updatable = false)
+//    @Temporal(TemporalType.TIMESTAMP)
+//    @CreatedDate
+//    private Date createdAt;
     @Column(name = "created_at")
     private java.sql.Timestamp createdAt;
 
     @Column(name = "updated_at")
     private java.sql.Timestamp updatedAt;
+
+
     //quan he vs order
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="order_id")
@@ -44,15 +56,17 @@ public class OrderDetail {
         this.id = dto.getId();
 //        this.productDetail = dto;
         this.price =dto.getPrice();
+        this.discount=dto.getDiscount();
         this.quantity = dto.getQuantity();
         this.createdAt = dto.getCreatedAt();
         this.updatedAt = dto.getUpdatedAt();
     }
     public OrderDetail(OrderDetailCreateDTO dto) {
         this.id = dto.getId();
-              this.price =dto.getPrice();
+        this.price =dto.getPrice();
+        this.discount=dto.getDiscount();
         this.quantity = dto.getQuantity();
-        this.createdAt = dto.getCreatedAt();
-        this.updatedAt = dto.getUpdatedAt();
+//        this.createdAt = dto.getCreatedAt();
+//        this.updatedAt = dto.getUpdatedAt();
     }
 }

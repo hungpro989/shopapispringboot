@@ -14,18 +14,20 @@ public class OrderDetailCreateDTO {
     private Integer orderId;
     private Integer proDeId;
     private Float price;
+    private Float discount;
     private Integer quantity;
-    private java.sql.Timestamp createdAt;
-    private java.sql.Timestamp updatedAt;
-    private ProductDetailDTO productDetailDTO;
+//    private java.sql.Timestamp createdAt;
+//    private java.sql.Timestamp updatedAt;
+//    private ProductDetailDTO productDetailDTO;
 
     public  OrderDetailCreateDTO(OrderDetail o){
         this.id=o.getId();
         this.orderId=o.getOrders().getId();
         this.proDeId=o.getProductDetail().getId();
         this.price=o.getPrice();
+        this.discount=o.getDiscount();
         this.quantity=o.getQuantity();
-        ProductDetail productDetail1 = o.getProductDetail();
-        this.productDetailDTO= new ProductDetailDTO(productDetail1);
+//        ProductDetail productDetail1 = o.getProductDetail();
+//        this.productDetailDTO= new ProductDetailDTO(productDetail1);
     }
 }

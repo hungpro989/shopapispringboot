@@ -145,7 +145,7 @@ public class Order {
     }
 
     public Order(OrderCreateDTO orderCreateDTO) {
-//        this.id = orderCreateDTO.getId();
+        this.id = orderCreateDTO.getId();
         this.totalMoney = orderCreateDTO.getTotalMoney();
         this.productMoney = orderCreateDTO.getProductMoney();
         this.shippingPrice = orderCreateDTO.getShippingPrice();

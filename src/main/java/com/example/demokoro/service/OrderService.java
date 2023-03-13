@@ -133,6 +133,7 @@ public class OrderService implements IOrderService {
         o.setUser(userRepository.findById(orderDTO.getUserId()).orElse(null));//đơn của nhân viên A
         o.setUser1(userRepository.findById(orderDTO.getCreatorId()).orElse(null));//người tạo đơn của nhân viên A
         o.setBillCode(generateString(o.getBusiness().getCodeName().trim()));
+        o.setCustomer(customer);
         if (o.getOrderTime() == null) {
             o.setOrderTime(new Date());
             o.setCustomer(customer);
