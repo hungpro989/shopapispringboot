@@ -64,8 +64,8 @@ public class Order {
     private String province;
     @Column(name = "district")
     private String district;
-    @Column(name = "wards")
-    private String wards;
+    @Column(name = "ward")
+    private String ward;
     @CreationTimestamp
     @Column(name = "order_time", updatable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -121,6 +121,10 @@ public class Order {
     @OneToMany(mappedBy="order", cascade = CascadeType.ALL)
     private List<OrderTag> orderTag;
 
+    //order_delivery
+    @OneToMany(mappedBy="order", cascade = CascadeType.ALL)
+    private List<OrderDelivery> orderDelivery;
+
     public Order(OrderDTO dto) {
         this.id = dto.getId();
         this.totalMoney = dto.getTotalMoney();
@@ -139,7 +143,7 @@ public class Order {
         this.shippingTime = dto.getShippingTime();
         this.province = dto.getProvince();
         this.district = dto.getDistrict();
-        this.wards = dto.getWards();
+        this.ward = dto.getWard();
         this.createdAt = dto.getCreatedAt();
         this.updatedAt = dto.getUpdatedAt();
     }
@@ -161,7 +165,7 @@ public class Order {
         this.orderTime = orderCreateDTO.getOrderTime();
         this.province = orderCreateDTO.getProvince();
         this.district = orderCreateDTO.getDistrict();
-        this.wards = orderCreateDTO.getWards();
+        this.ward = orderCreateDTO.getWard();
     }
 
 }

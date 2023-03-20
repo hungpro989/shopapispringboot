@@ -11,12 +11,14 @@ import lombok.NoArgsConstructor;
 public class OrderStatusDTO {
     private Integer id;
     private String name;
+    private String attribute;
 //    private Boolean status;
 //    private Integer stt;
     //private List<OrderDTO> orderDTO;
     public OrderStatusDTO(OrderStatus d){
         this.id=d.getId();
         this.name=d.getName();
+        this.attribute=d.getAttribute();
 //        this.status=d.getStatus();
 //        this.stt=d.getStt();
         //list order

@@ -2,6 +2,7 @@ package com.example.demokoro.service;
 
 import com.example.demokoro.dto.OrderStatusDTO;
 import com.example.demokoro.models.OrderStatus;
+import com.example.demokoro.models.OrderDelivery;
 import com.example.demokoro.repository.OrderStatusRepository;
 import com.example.demokoro.serviceImpl.IOrderStatusService;
 import org.springframework.beans.factory.annotation.Autowired;

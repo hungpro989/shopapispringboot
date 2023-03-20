@@ -1,5 +1,6 @@
 package com.example.demokoro.repository;
 
+import com.example.demokoro.dto.OrderDTO;
 import com.example.demokoro.models.User;
 import com.example.demokoro.models.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -19,4 +20,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
 
     @Query(value = "select o from Order o where (o.user is null or o.user = :userId)")
     List<Order> filterOrderByCondition1(User userId);
+    Order findOrderByBillCode(String billCode);
 }

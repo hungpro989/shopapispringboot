@@ -28,11 +28,15 @@ public class OrderStatus {
     @Column(name = "stt")
     private Integer stt;
 
+    @Column(name = "attribute")
+    private String attribute;
+
     @OneToMany(mappedBy = "orderStatus")
     private List<Order> order;
     public OrderStatus(OrderStatusDTO dto) {
         this.id=dto.getId();
         this.name=dto.getName();
+        this.attribute = dto.getAttribute();
     }
 //1-n
 }

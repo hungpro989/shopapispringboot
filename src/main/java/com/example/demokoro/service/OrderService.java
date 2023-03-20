@@ -140,9 +140,12 @@ public class OrderService implements IOrderService {
         }
         orderRepository.save(o);
         createOrderTag(orderDTO, o);
+        createProductDetail(orderDTO, o);
+        return true;
+    }
+    public void createProductDetail(@RequestBody OrderCreateDTO orderDTO, Order o){
         orderDTO.getOrderDetailDTO().forEach(var -> {
-            Integer productDetailId = var.getProDeId();
-            ProductDetail productDetail = productDetailRepository.findById(productDetailId).orElse(null);
+            ProductDetail productDetail = productDetailRepository.findById(var.getProDeId()).orElse(null);
             if (productDetail != null) {
                 OrderDetail orderDetail = new OrderDetail(var);
                 orderDetail.setOrders(o);
@@ -151,20 +154,24 @@ public class OrderService implements IOrderService {
                 orderDetailService.save(orderDetail);
             }
         });
-        return true;
     }
     public void createOrderTag(@RequestBody OrderCreateDTO orderCreateDTO, Order p) {
         if(orderCreateDTO.getOrderTag()!= null){
-            orderCreateDTO.getOrderTag().forEach(var -> {
-                Tag tag = new Tag();
-                tag = tagRepository.findById(var.getTagId()).orElse(null);
-                if (tag!=null){
-                    OrderTag orderTag = new OrderTag();
-                    orderTag.setOrder(p);
-                    orderTag.setTag(tag);
-                    orderTagService.save(orderTag);
-                }
-            });
+            if(orderTagService.deleteOrderTagByOrderId(p.getId())){
+                orderCreateDTO.getOrderTag().forEach(var -> {
+                    Tag tag = new Tag();
+                    tag = tagRepository.findById(var.getTagId()).orElse(null);
+                    if (tag!=null){
+                        OrderTag orderTag = new OrderTag();
+                        orderTag.setOrder(p);
+                        orderTag.setTag(tag);
+                        orderTagService.save(orderTag);
+                    }
+                });
+            }else{
+                System.out.println("NG");
+            }
+
         }
     }
     @Override
@@ -218,5 +225,14 @@ public class OrderService implements IOrderService {
             listDto.add(orderDTO);
         });
         return listDto;
+    }
+
+    @Override
+    public OrderDTO getOrderByBillCode(String billCode) {
+        Order o = orderRepository.findOrderByBillCode(billCode);
+        if (o!=null) {
+            return new OrderDTO(o);
+        }
+        return null;
     }
 }

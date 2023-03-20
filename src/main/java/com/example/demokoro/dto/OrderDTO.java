@@ -30,7 +30,7 @@ public class OrderDTO {
     private Date shippingTime;
     private String province;
     private String district;
-    private String wards;
+    private String ward;
     private Date createdAt;
     private Date updatedAt;
     private OrderStatusDTO orderStatusDTO;
@@ -60,7 +60,7 @@ public class OrderDTO {
         this.shippingTime = o.getShippingTime();
         this.province = o.getProvince();
         this.district = o.getDistrict();
-        this.wards = o.getWards();
+        this.ward = o.getWard();
         this.createdAt = o.getCreatedAt();
         this.updatedAt = o.getUpdatedAt();
 
@@ -107,8 +107,4 @@ public class OrderDTO {
         });
         this.orderTag = orderTagDTO;
     }
-
-
-
-
 }

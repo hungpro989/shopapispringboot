@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "delivery")
@@ -26,6 +27,10 @@ public class Delivery {
 
     @Column(name = "token")
     private String token;
+
+    //order_delivery
+    @OneToMany(mappedBy="order", cascade = CascadeType.ALL)
+    private List<OrderDelivery> orderDelivery;
 
     public Delivery(DeliveryDTO dto) {
         this.id=dto.getId();

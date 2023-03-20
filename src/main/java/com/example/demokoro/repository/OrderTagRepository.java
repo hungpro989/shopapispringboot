@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 @Repository
 public interface OrderTagRepository extends JpaRepository<OrderTag, Integer> {
-
+    void deleteOrderTagByOrderId(Integer orderId);
     List<OrderTag> findOrderTagByTagId(Integer id);
 }

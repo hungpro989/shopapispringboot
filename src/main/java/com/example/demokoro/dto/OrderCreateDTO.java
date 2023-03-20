@@ -34,7 +34,7 @@ public class OrderCreateDTO {
     private Date orderTime;
     private String province;
     private String district;
-    private String wards;
+    private String ward;
     private List<OrderDetailDTO> orderDetailDTO;
     private List<OrderTagCreateDTO> orderTag;
 }

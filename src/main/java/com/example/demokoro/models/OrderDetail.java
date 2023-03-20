@@ -43,7 +43,7 @@ public class OrderDetail {
 
 
     //quan he vs order
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name="order_id")
     private Order orders;
 
