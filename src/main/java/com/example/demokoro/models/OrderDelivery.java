@@ -1,6 +1,7 @@
 package com.example.demokoro.models;
 
 import com.example.demokoro.dto.OrderDeliveryDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,9 +45,12 @@ public class OrderDelivery {
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedAt;
 
-    @ManyToOne
+    @JsonBackReference
+    @OneToOne
     @JoinColumn(name="order_id", referencedColumnName = "id")
     private Order order;
+
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="delivery_id", referencedColumnName = "id")
     private Delivery delivery;
@@ -57,5 +61,4 @@ public class OrderDelivery {
         this.codeDelivery=dto.getCodeDelivery();
         this.status=dto.isStatus();
     }
-
 }

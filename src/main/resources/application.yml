@@ -15,6 +15,6 @@ spring:
       hibernate.format_sql: false
     show-sql: false
     spring:
-      mvc:
-        cors:
-          allowed-origins=http://localhost:3000:
+      spring:
+        websocket:
+          path: /websocket

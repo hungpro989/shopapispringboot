@@ -42,6 +42,7 @@ public class OrderDTO {
     private CustomerViewDTO customerViewDTO;
     private List<OrderDetailDTO> orderDetail;
     private List<OrderTagDTO> orderTag;
+    private OrderDeliveryDTO orderDeliveryDTO;
     public OrderDTO(Order o) {
         this.id = o.getId();
         this.totalMoney = o.getTotalMoney();
@@ -106,5 +107,13 @@ public class OrderDTO {
             orderTagDTO.add(new OrderTagDTO(p));
         });
         this.orderTag = orderTagDTO;
+
+        //order delivery
+        OrderDelivery orderDelivery = o.getOrderDelivery();
+        if(orderDelivery!=null){
+            this.orderDeliveryDTO = new OrderDeliveryDTO(orderDelivery);
+        }
+
+
     }
 }

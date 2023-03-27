@@ -17,6 +17,7 @@ public class DeliveryDTO {
     private String codeName;
     private String name;
     private String token;
+    private String dataStatus;
 
     @OneToMany(mappedBy = "delivery")
     private List<Order> order;
@@ -25,5 +26,6 @@ public class DeliveryDTO {
         this.codeName=d.getCodeName();
         this.name=d.getName();
         this.token=d.getToken();
+        this.dataStatus=d.getDataStatus();
     }
 }

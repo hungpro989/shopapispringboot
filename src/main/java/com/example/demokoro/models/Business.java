@@ -1,6 +1,7 @@
 package com.example.demokoro.models;
 
 import com.example.demokoro.dto.BusinessDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,8 +35,15 @@ public class Business {
     @Column(name = "status")
     private boolean status;
 
+    @Column(name = "page_id")
+    private  String pageId;
+
     @OneToMany(mappedBy = "business")
     private List<Order> order;
+
+    @ManyToOne()
+    @JoinColumn(name = "source_id", nullable=false)
+    private Source source;
     public Business(BusinessDTO dto){
         this.id = dto.getId();
         this.codeName=dto.getCodeName();
@@ -43,5 +51,6 @@ public class Business {
         this.phone=dto.getPhone();
         this.address=dto.getAddress();
         this.status=dto.isStatus();
+        this.pageId=dto.getPageId();
     }
 }

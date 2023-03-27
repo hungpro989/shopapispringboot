@@ -79,7 +79,7 @@ public class OrderController {
         if (!listDto.isEmpty()) {
             return ResponseEntity.ok().body(new ResponseObject("success", "Lấy danh sách đơn hàng thành công", listDto));
         }
-        return ResponseEntity.badRequest().body(new ResponseObject("error", "Lấy danh sách đơn hàng thất bại", null));
+        return ResponseEntity.ok().body(new ResponseObject("success", "Danh sách đơn hàng rỗng", null));
     }
     @PostMapping
     public ResponseEntity<ResponseObject> createOrder(@RequestBody OrderCreateDTO orderCreateDTO){
@@ -147,6 +147,14 @@ public class OrderController {
             return ResponseEntity.ok().body(new ResponseObject("success", "Lấy đơn hàng thành công by bill code", dto));
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Không tìm thấy đơn hàng có bill code như trên", null));
+    }
+    @GetMapping("/update-delivery/{orderId}/{deliveryId}")
+    public ResponseEntity<ResponseObject> updateOrderDelivery(@PathVariable Integer orderId, @PathVariable Integer deliveryId){
+        boolean check = orderService.updateDelivery(orderId, deliveryId);
+        if(check == true){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Cập nhật đơn vị vận chuyển thành công", check));
+        }
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Cập nhật đơn vị vận chuyển thất bại", null));
     }
 
 }

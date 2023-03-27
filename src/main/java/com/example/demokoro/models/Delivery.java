@@ -27,6 +27,8 @@ public class Delivery {
 
     @Column(name = "token")
     private String token;
+    @Column(name = "data_status")
+    private String dataStatus;
 
     //order_delivery
     @OneToMany(mappedBy="order", cascade = CascadeType.ALL)
@@ -37,5 +39,6 @@ public class Delivery {
         this.codeName=dto.getCodeName();
         this.name=dto.getName();
         this.token=dto.getToken();
+        this.dataStatus=dto.getDataStatus();
     }
 }

@@ -2,6 +2,7 @@ package com.example.demokoro.models;
 
 import com.example.demokoro.dto.OrderCreateDTO;
 import com.example.demokoro.dto.OrderDTO;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -122,8 +123,9 @@ public class Order {
     private List<OrderTag> orderTag;
 
     //order_delivery
-    @OneToMany(mappedBy="order", cascade = CascadeType.ALL)
-    private List<OrderDelivery> orderDelivery;
+    @JsonManagedReference
+    @OneToOne(mappedBy="order", cascade = CascadeType.ALL)
+    private OrderDelivery orderDelivery;
 
     public Order(OrderDTO dto) {
         this.id = dto.getId();

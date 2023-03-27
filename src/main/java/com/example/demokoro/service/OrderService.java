@@ -126,13 +126,31 @@ public class OrderService implements IOrderService {
             customer = customerRepository.findCustomerByPhone(orderDTO.getPhone());
         }
         //liên kết các bảng 1-n
-        o.setOrderStatus(orderStatusRepository.findById(orderDTO.getStatusId()).orElse(null)); //trạng thái đơn hàng
-        o.setOrderType(orderTypeRepository.findById(orderDTO.getTypeId()).orElse(null));// kiểu đơn
-        o.setBusiness(businessRepository.findById(orderDTO.getBusinessId()).orElse(null)); // business
-        o.setDelivery(deliveryRepository.findById(orderDTO.getDeliveryId()).orElse(null));//đơn vị vận chuyển
-        o.setUser(userRepository.findById(orderDTO.getUserId()).orElse(null));//đơn của nhân viên A
-        o.setUser1(userRepository.findById(orderDTO.getCreatorId()).orElse(null));//người tạo đơn của nhân viên A
-        o.setBillCode(generateString(o.getBusiness().getCodeName().trim()));
+        if(orderDTO.getStatusId()!=null){
+            o.setOrderStatus(orderStatusRepository.findById(orderDTO.getStatusId()).orElse(null)); //trạng thái đơn hàng
+        }
+        if(orderDTO.getTypeId()!=null){
+            o.setOrderType(orderTypeRepository.findById(orderDTO.getTypeId()).orElse(null));// kiểu đơn
+        }
+        if(orderDTO.getBusinessId()!=null){
+            o.setBusiness(businessRepository.findById(orderDTO.getBusinessId()).orElse(null)); // business
+        }
+        if(orderDTO.getDeliveryId()!=null){
+            o.setDelivery(deliveryRepository.findById(orderDTO.getDeliveryId()).orElse(null));//đơn vị vận chuyển
+        }
+        if(orderDTO.getUserId()!=null){
+            o.setUser(userRepository.findById(orderDTO.getUserId()).orElse(null));//đơn của nhân viên A
+        }
+        if(orderDTO.getCreatorId()!=null){
+            o.setUser1(userRepository.findById(orderDTO.getCreatorId()).orElse(null));//người tạo đơn của nhân viên A
+        }
+        if(orderDTO.getId()==null){
+            //tao moi
+            o.setBillCode(generateString(o.getBusiness().getCodeName().trim())); //taoj mã bill code
+        }else {
+            o.setBillCode(getById(orderDTO.getId()).getBillCode());
+        }
+
         o.setCustomer(customer);
         if (o.getOrderTime() == null) {
             o.setOrderTime(new Date());
@@ -184,7 +202,6 @@ public class OrderService implements IOrderService {
         }
         return false;
     }
-
     @Override
     public boolean updateDelivery(Integer id, Integer deliveryId) {
         Order o = orderRepository.findById(id).orElse(null);
@@ -195,7 +212,6 @@ public class OrderService implements IOrderService {
         }
         return false;
     }
-
     @Override
     public List<OrderDTO> getOrderByStatus(Integer id) {
         List<OrderDTO> listDto = new ArrayList<>();
@@ -216,7 +232,6 @@ public class OrderService implements IOrderService {
         }
         return null;
     }
-
     @Override
     public List<OrderDTO> printMultipleBill(OrderPrintMultipleDTO orderPrintMultipleDTO) {
         List<OrderDTO> listDto = new ArrayList<>();
@@ -226,7 +241,6 @@ public class OrderService implements IOrderService {
         });
         return listDto;
     }
-
     @Override
     public OrderDTO getOrderByBillCode(String billCode) {
         Order o = orderRepository.findOrderByBillCode(billCode);
