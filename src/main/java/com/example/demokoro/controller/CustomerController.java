@@ -36,7 +36,7 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<ResponseObject> create(@RequestBody CustomerCreateDTO dto){
         Customer c = new Customer(dto);
-        if(!customerService.checkExistEmail(dto.getEmail()) && !customerService.checkExistPhone(dto.getPhone())){
+        if(!customerService.checkExistEmail(dto.getEmail()) && customerService.checkExistPhone(dto.getPhone())!=null){
             if(!customerService.checkExistUsername(dto.getUsername())){
                 if(customerService.save(c)){
                     return ResponseEntity.ok().body(new ResponseObject("success", "Thêm khách hàng mới thành công", c));
@@ -54,7 +54,7 @@ public class CustomerController {
         CustomerViewDTO dto = customerService.getById(id);
         if(dto != null){
             //kiểm tra allEmployee nhưng phone, email là ko trùng ==> cập nhật luôn
-            if(!customerService.checkExistPhone(customer.getPhone()) && !customerService.checkExistEmail(customer.getEmail())) {
+            if(customerService.checkExistPhone(customer.getPhone())!=null && !customerService.checkExistEmail(customer.getEmail())) {
                 if (customerService.save(customer)) {
                     return ResponseEntity.ok().body(new ResponseObject("success", "Cập nhật thông tin thành công", customer));
                 }
@@ -84,5 +84,13 @@ public class CustomerController {
             return ResponseEntity.ok().body(new ResponseObject("success", "Xoá khách hàng thành công", null));
         };
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Id khách hàng không tồn tại", null));
+    }
+    @GetMapping("/find-customer-by-phone/{phone}")
+    public ResponseEntity<ResponseObject> findCustomerByPhone(@PathVariable String phone){
+        CustomerViewDTO dto = customerService.checkExistPhone(phone);
+        if (dto!=null){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Kiểm tra thông tin KH bằng SĐT thành công", dto));
+        }
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Không tìm thấy KH có sdt như trên", null));
     }
 }

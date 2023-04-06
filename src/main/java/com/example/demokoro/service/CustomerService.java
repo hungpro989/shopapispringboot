@@ -58,8 +58,10 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public boolean checkExistPhone(String phone) {
-        return customerRepository.findCustomerByPhone(phone) != null;
+    public CustomerViewDTO checkExistPhone(String phone) {
+        Customer customer =  customerRepository.findCustomerByPhone(phone);
+        CustomerViewDTO dto = new CustomerViewDTO(customer);
+        return dto;
     }
 
     @Override

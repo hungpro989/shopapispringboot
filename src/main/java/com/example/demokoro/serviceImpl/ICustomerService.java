@@ -11,7 +11,7 @@ public interface ICustomerService {
     boolean deleteById(Integer id);
     boolean save(Customer entity);
     boolean checkExistEmail(String email);
-    boolean checkExistPhone(String phone);
+    CustomerViewDTO checkExistPhone(String phone);
     boolean checkExistId(Integer id);
 
     boolean checkExistUsername(String username);
