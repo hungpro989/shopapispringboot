@@ -1,11 +1,14 @@
 package com.example.demokoro.controller;
 
+import com.example.demokoro.dto.ResponseObject;
 import com.example.demokoro.jwt.JwtTokenProvider;
 import com.example.demokoro.payload.LoginRequest;
 import com.example.demokoro.payload.LoginResponse;
 import com.example.demokoro.payload.RandomStuff;
 import com.example.demokoro.service.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,7 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 @RestController
-@RequestMapping("/api")
+@RequestMapping
+@CrossOrigin
 public class LoginController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -41,6 +45,24 @@ public class LoginController {
         // Trả về jwt cho người dùng.
         String jwt = tokenProvider.generateToken((CustomUserDetails) authentication.getPrincipal());
         return new LoginResponse(jwt);
+    }
+    //kiểm tra access token có hợp lệ, còn hạn sử dụng hay không
+    @GetMapping("/auth/check-token")
+    public ResponseEntity<ResponseObject> checkToken(HttpServletRequest request){
+        String header = request.getHeader("Authorization");
+        // Kiểm tra header Authorization
+        if (header == null || !header.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        // Lấy chuỗi token từ header Authorization
+        String token = header.substring(7);
+
+        if(tokenProvider.validateToken(token)){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Access token successfully", token));
+        }else{
+            return ResponseEntity.status(400).body(new ResponseObject("error", "Access", null));
+        }
     }
 
 

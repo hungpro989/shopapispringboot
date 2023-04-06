@@ -96,7 +96,7 @@ public class OrderController {
         if(orderService.save(orderDTO)){
             return ResponseEntity.ok().body(new ResponseObject("success", "Cập nhật đơn hàng thành công", null));
         }
-        return ResponseEntity.badRequest().body(new ResponseObject("error", "Cập nhật đơn hàng thất bại", null));
+        return ResponseEntity.badRequest().body(new ResponseObject("error", "Cập nhật đơn hàng thất bại", orderDTO));
     }
     @PutMapping("/{id}/{statusId}")
     public ResponseEntity<ResponseObject> updateOrderStatus(@PathVariable Integer id, @PathVariable Integer statusId){
@@ -133,7 +133,7 @@ public class OrderController {
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Xoá product detail thất bại", null));
     }
-    @PostMapping("/save-data-delivery")
+    @PutMapping("/save-data-delivery")
     public ResponseEntity<ResponseObject>  createOrderDelivery(@RequestBody OrderDeliveryDTO orderDeliveryDTO){
             if(orderDeliveryService.save(orderDeliveryDTO)){
                 return ResponseEntity.ok().body(new ResponseObject("success", "Lưu order delivery thành công", orderDeliveryDTO.getCodeDelivery()));

@@ -2,13 +2,22 @@ package com.example.demokoro.controller;
 
 import com.example.demokoro.dto.*;
 import com.example.demokoro.models.Product;
+import com.example.demokoro.service.ImageService;
 import com.example.demokoro.service.ProductDetailService;
 import com.example.demokoro.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.transaction.Transactional;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Objects;
 @RestController
@@ -19,7 +28,8 @@ public class ProductController {
     ProductService productService;
     @Autowired
     ProductDetailService productDetailService;
-
+    @Autowired
+    ImageService imageService;
     @GetMapping
     public ResponseEntity<ResponseObject> getAllProduct(){
         List<ProductDTOAdmin> listDto = productService.getAllProduct();
@@ -97,4 +107,6 @@ public class ProductController {
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Lay danh sach san pham con that bai", null));
     }
+
+
 }
