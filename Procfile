@@ -1,0 +1,1 @@
+web: java -jar demokoro.jar
