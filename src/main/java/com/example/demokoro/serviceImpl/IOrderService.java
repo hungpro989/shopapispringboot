@@ -20,4 +20,5 @@ public interface IOrderService {
     OrderDTO printBill(Integer id, Integer deliveryId);
     List<OrderDTO> printMultipleBill(OrderPrintMultipleDTO orderPrintMultipleDTO);
     OrderDTO getOrderByBillCode(String billCode);
+    List<OrderDTO> findOrderByPhoneOrBillCode(String phone, String billCode);
 }

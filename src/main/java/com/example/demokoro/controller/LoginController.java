@@ -61,7 +61,7 @@ public class LoginController {
         if(tokenProvider.validateToken(token)){
             return ResponseEntity.ok().body(new ResponseObject("success", "Access token successfully", token));
         }else{
-            return ResponseEntity.status(400).body(new ResponseObject("error", "Access", null));
+            return ResponseEntity.status(400).body(new ResponseObject("error", "Access token field", null));
         }
     }
 

@@ -34,4 +34,7 @@ public class CustomerCreateDTO {
     private float height;
 
     private float weight;
+    private String province;
+    private String district;
+    private String ward;
 }

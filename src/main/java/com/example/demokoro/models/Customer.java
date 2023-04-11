@@ -54,7 +54,12 @@ public class Customer {
 
     @Column(name = "weight")
     private float weight;
-
+    @Column(name="province")
+    private String province;
+    @Column(name="district")
+    private String district;
+    @Column(name="ward")
+    private String ward;
     @OneToMany(mappedBy = "customer")
     private List<Order> order;
 
@@ -75,5 +80,8 @@ public class Customer {
         this.weight=c.getWeight();
         this.birthday=c.getBirthday();
         this.status= c.isStatus();
+        this.province=c.getProvince();
+        this.district=c.getDistrict();
+        this.ward=c.getWard();
     }
 }

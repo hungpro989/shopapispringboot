@@ -146,7 +146,15 @@ public class OrderController {
         if(dto!=null){
             return ResponseEntity.ok().body(new ResponseObject("success", "Lấy đơn hàng thành công by bill code", dto));
         }
-        return ResponseEntity.badRequest().body(new ResponseObject("error", "Không tìm thấy đơn hàng có bill code như trên", null));
+        return ResponseEntity.status(400).body(new ResponseObject("error", "Không tìm thấy đơn hàng có bill code như trên", null));
+    }
+    @GetMapping("/search-order-phone-bill-code/{phone}/{billCode}")
+    public ResponseEntity<ResponseObject> getByBillCode(@PathVariable String phone,@PathVariable String billCode ){
+        List<OrderDTO> dto = orderService.findOrderByPhoneOrBillCode(phone,billCode);
+        if(dto!=null){
+            return ResponseEntity.ok().body(new ResponseObject("success", "Lấy đơn hàng thành công by bill code", dto));
+        }
+        return ResponseEntity.status(400).body(new ResponseObject("error", "Không tìm thấy đơn hàng có bill code như trên", null));
     }
     @GetMapping("/update-delivery/{orderId}/{deliveryId}")
     public ResponseEntity<ResponseObject> updateOrderDelivery(@PathVariable Integer orderId, @PathVariable Integer deliveryId){

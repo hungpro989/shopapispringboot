@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -40,6 +41,10 @@ public class CustomerViewDTO {
 
     private float weight;
 
+    private String province;
+    private String district;
+    private String ward;
+
     private List<CustomerAddressDTO> customerAddressDTO;
 
     public CustomerViewDTO(Customer c) {
@@ -64,6 +69,8 @@ public class CustomerViewDTO {
             customerAddressDTO.add(new CustomerAddressDTO(p));
         });
         this.customerAddressDTO = customerAddressDTO;
-
+    this.province=c.getProvince();
+    this.district=c.getDistrict();
+    this.ward=c.getWard();
     }
 }

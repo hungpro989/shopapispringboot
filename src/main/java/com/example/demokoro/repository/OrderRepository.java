@@ -21,4 +21,5 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     @Query(value = "select o from Order o where (o.user is null or o.user = :userId)")
     List<Order> filterOrderByCondition1(User userId);
     Order findOrderByBillCode(String billCode);
+    List<Order> findOrderByPhoneOrBillCode(String phone, String billCode);
 }

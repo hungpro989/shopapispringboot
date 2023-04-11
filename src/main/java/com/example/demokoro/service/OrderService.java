@@ -249,4 +249,14 @@ public class OrderService implements IOrderService {
         }
         return null;
     }
+
+    @Override
+    public List<OrderDTO> findOrderByPhoneOrBillCode(String phone, String billCode ) {
+        List<OrderDTO> listDto = new ArrayList<>();
+        List<Order> list = orderRepository.findOrderByPhoneOrBillCode(phone, billCode);
+        for (Order var : list) {
+            listDto.add(new OrderDTO(var));
+        }
+        return listDto;
+    }
 }
