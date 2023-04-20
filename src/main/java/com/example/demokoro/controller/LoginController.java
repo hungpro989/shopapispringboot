@@ -2,9 +2,9 @@ package com.example.demokoro.controller;
 
 import com.example.demokoro.dto.ResponseObject;
 import com.example.demokoro.jwt.JwtTokenProvider;
-import com.example.demokoro.payload.LoginRequest;
-import com.example.demokoro.payload.LoginResponse;
-import com.example.demokoro.payload.RandomStuff;
+import com.example.demokoro.config.LoginRequest;
+import com.example.demokoro.config.LoginResponse;
+import com.example.demokoro.config.RandomStuff;
 import com.example.demokoro.service.CustomUserDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,15 +1,24 @@
 package com.example.demokoro.controller;
 
 import com.example.demokoro.dto.*;
+import com.example.demokoro.models.Order;
 import com.example.demokoro.models.OrderDelivery;
 import com.example.demokoro.service.OrderDeliveryService;
 import com.example.demokoro.service.OrderDetailService;
 import com.example.demokoro.service.OrderService;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
@@ -164,5 +173,51 @@ public class OrderController {
         }
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Cập nhật đơn vị vận chuyển thất bại", null));
     }
+    @GetMapping("/export")
+    public void exportToExcel(HttpServletResponse response) throws IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-Disposition", "attachment; filename=Orders.xlsx");
 
+        List<OrderDTO> listDto = orderService.getAll();
+
+        Workbook workbook = new XSSFWorkbook();
+        Sheet sheet = workbook.createSheet("orderDto");
+
+        Row headerRow = sheet.createRow(0);
+        headerRow.createCell(0).setCellValue("STT");
+        headerRow.createCell(1).setCellValue("Mã đơn");
+        headerRow.createCell(2).setCellValue("Trạng thái");
+        headerRow.createCell(3).setCellValue("Loại đơn");
+        headerRow.createCell(4).setCellValue("Tên người nhận");
+        headerRow.createCell(5).setCellValue("Địa chỉ");
+        headerRow.createCell(6).setCellValue("SĐT");
+        headerRow.createCell(7).setCellValue("Tổng tiền");
+        headerRow.createCell(8).setCellValue("Thời gian đặt");
+        headerRow.createCell(9).setCellValue("Sản phẩm");
+        int rowNum = 1;
+        for (OrderDTO orderDto : listDto) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(rowNum);
+            row.createCell(1).setCellValue(orderDto.getBillCode());
+            row.createCell(2).setCellValue(orderDto.getOrderStatusDTO().getName());
+            row.createCell(3).setCellValue(orderDto.getOrderTypeDTO().getName());
+            row.createCell(4).setCellValue(orderDto.getName());
+            row.createCell(5).setCellValue(orderDto.getAddress());
+            row.createCell(6).setCellValue(orderDto.getPhone());
+            row.createCell(7).setCellValue(orderDto.getPaymentAmount());
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+            String formattedDateTime = dateFormat.format(orderDto.getOrderTime());
+            row.createCell(8).setCellValue(formattedDateTime);
+            StringBuilder sb = new StringBuilder();
+            for (OrderDetailDTO od : orderDto.getOrderDetail()) {
+                String nameOd = od.getProductDetailDTO().getCodeName();
+                sb.append(nameOd).append(", ");
+            }
+            String toltalNameOd = sb.substring(0, sb.length() - 2);
+            System.out.println(toltalNameOd);
+            row.createCell(9).setCellValue(toltalNameOd);
+        }
+        workbook.write(response.getOutputStream());
+        workbook.close();
+    }
 }
