@@ -52,7 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/login","/api/v1/file/images/**","/api/v1/orders/export/*").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
+                .antMatchers("/login","/api/v1/file/images/**","/api/v1/orders/export","/api/v1/products/export").permitAll() // Cho phép tất cả mọi người truy cập vào 2 địa chỉ này
                 .anyRequest().authenticated(); // Tất cả các request khác đều cần phải xác thực mới được truy cập
 //                .anyRequest().permitAll();
 

@@ -174,12 +174,33 @@ public class OrderController {
         return ResponseEntity.badRequest().body(new ResponseObject("error", "Cập nhật đơn vị vận chuyển thất bại", null));
     }
     @GetMapping("/export")
-    public void exportToExcel(HttpServletResponse response) throws IOException {
+    public void exportToExcel(HttpServletResponse response,
+                              @RequestParam(value = "employeeId", required = false) Integer employeeId,
+                              @RequestParam(value = "creatorId", required = false) Integer creatorId,
+                              @RequestParam(value = "businessId", required = false) Integer businessId,
+                              @RequestParam(value = "deliveryId", required = false) Integer deliveryId,
+                              @RequestParam(value = "orderStatusId", required = false) Integer orderStatusId,
+                              @RequestParam(value = "orderTypeId", required = false) Integer orderTypeId,
+                              @RequestParam(value = "orderTimeStart", required = false) String orderTimeStart,
+                              @RequestParam(value = "orderTimeEnd", required = false) String orderTimeEnd) throws IOException {
         response.setContentType("application/vnd.ms-excel");
         response.setHeader("Content-Disposition", "attachment; filename=Orders.xlsx");
-
-        List<OrderDTO> listDto = orderService.getAll();
-
+        LocalDate toDay = LocalDate.now(ZoneId.of("GMT+07:00"));
+        String start = null;
+        String end = null;
+        if (orderTimeStart != null && orderTimeEnd != null) {
+            start = orderTimeStart + " 00:00:00";
+            end = orderTimeEnd + " 23:59:59";
+        }else if(orderTimeStart != null && orderTimeEnd == null){
+            start = orderTimeStart + " 00:00:00";
+            end = toDay+" 23:59:59";
+        }else{
+            start = toDay + " 00:00:00";
+            end = toDay+" 23:59:59";
+        }
+        System.out.println(start);
+        System.out.println(end);
+        List<OrderDTO> listDto = orderService.getAllByCondition(employeeId, creatorId, businessId, deliveryId, orderStatusId, orderTypeId, start, end);
         Workbook workbook = new XSSFWorkbook();
         Sheet sheet = workbook.createSheet("orderDto");
 
@@ -197,7 +218,7 @@ public class OrderController {
         int rowNum = 1;
         for (OrderDTO orderDto : listDto) {
             Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(rowNum);
+            row.createCell(0).setCellValue(rowNum-1);
             row.createCell(1).setCellValue(orderDto.getBillCode());
             row.createCell(2).setCellValue(orderDto.getOrderStatusDTO().getName());
             row.createCell(3).setCellValue(orderDto.getOrderTypeDTO().getName());
@@ -214,7 +235,6 @@ public class OrderController {
                 sb.append(nameOd).append(", ");
             }
             String toltalNameOd = sb.substring(0, sb.length() - 2);
-            System.out.println(toltalNameOd);
             row.createCell(9).setCellValue(toltalNameOd);
         }
         workbook.write(response.getOutputStream());
